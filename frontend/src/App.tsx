@@ -4,6 +4,8 @@ import Login from "./pages/auth/Login";
 import Onboarding from "./pages/Onboarding/Onboarding";
 import Sport from "./pages/Sport/Sport";
 import Role from "./pages/Role/Role";
+import Reset from "./pages/auth/account-recovery/Reset";
+import Verification from "./pages/auth/Verification";
 
 
 const App = () => {
@@ -16,6 +18,10 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/sport" element={<Sport />} />
         <Route path="/role" element={<Role />} />
+        <Route path="/reset" element={<Reset />} />
+        <Route path="/verify" element={<Verification />} />
+
+
 
 
 

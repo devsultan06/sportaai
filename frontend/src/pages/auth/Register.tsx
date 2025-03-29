@@ -14,7 +14,7 @@ const Register = () => {
 
     const goAuth = (event: React.FormEvent) => {
         event.preventDefault();
-        navigate("/sport");
+        navigate("/verify");
     }
     return (
         <Background bgImage="/images/bg.png">

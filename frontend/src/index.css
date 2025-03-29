@@ -60,3 +60,9 @@ div.slide button.active {
 div.sport p {
   color: rgba(255, 255, 255, 0.4);
 }
+
+div.code input {
+  background: transparent;
+  border: 1px solid var(--gradient, #ffbb34);
+  position: relative;
+}
