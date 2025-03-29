@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  overflow-x: hidden;
+}
+
+button.create {
+  background: linear-gradient(90deg, #ffbb34 -2.75%, #ff256f 100%), #1a1a1a;
+  box-shadow: 8px 8px 8px 0px rgba(255, 255, 255, 0.2) inset;
+}
+
+input:focus {
+  border: 1px solid var(--gradient, #ffbb34);
+}
+
+button.google,
+button.apple {
+  box-shadow: 2px 2px 8px 0px rgba(146, 179, 189, 0.2);
+}
+
+div.slide{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+div.slide button {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  background: #fff;
+
+}
+
+div.slide button.active{
+  width: 40px;
+  height: 10px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #FFBB34 -2.75%, #FF256F 100%), #FFF;
+
+}
