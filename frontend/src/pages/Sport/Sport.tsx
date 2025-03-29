@@ -1,14 +1,21 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import SportsSelection from "./SportSelection";
+import GradientButton from "../../components/ui/GradientButton";
 
 const Sport = () => {
     const navigate = useNavigate();
     const [searchQuery, setSearchQuery] = useState("");
+    const [selectedSport, setSelectedSport] = useState<number | null>(null);
+
 
     useEffect(() => {
         document.title = "Login | Sporta AI";
     }, []);
+
+    const goRole = () => {
+        navigate("/role");
+    }
 
     return (
         <div className="relative bg-[#121212] py-[20px] ">
@@ -67,13 +74,20 @@ const Sport = () => {
 
                             </div>
 
-                            <SportsSelection searchQuery={searchQuery} />
+                            <SportsSelection searchQuery={searchQuery} selectedSport={selectedSport} setSelectedSport={setSelectedSport} />
 
                         </div>
                     </div>
                 </div>
 
             </div>
+
+            {/* "Go Forward" Icon */}
+            {selectedSport !== null && (
+                <div className="absolute top-[40%] right-[100px] transform -translate-y-1/2 transition-opacity duration-300">
+                    <GradientButton text="Continue" icon="/images/continue.png" onClick={goRole} />
+                </div>
+            )}
 
         </div >
 

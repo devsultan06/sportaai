@@ -1,4 +1,4 @@
-import { useState } from "react";
+import GradientButton from "../../components/ui/GradientButton";
 
 const sportsOptions = [
     { id: 1, name: "Baseball", description: "America’s Pastime: Tradition, community, and timeless charm", logo: "/images/baseball.png" },
@@ -9,8 +9,7 @@ const sportsOptions = [
     { id: 6, name: "Wrestling", description: "Battle on the Gridiron: Power, strategy, and adrenaline", logo: "/images/baseball.png" },
 ];
 
-const SportsSelection = ({ searchQuery }: { searchQuery: string }) => {
-    const [selectedSport, setSelectedSport] = useState<number | null>(null);
+const SportsSelection = ({ searchQuery, selectedSport, setSelectedSport }: { searchQuery: string; selectedSport: number | null; setSelectedSport: (sportId: number) => void }) => {
 
     // Filter sports based on search input
     const filteredSports = sportsOptions.filter((sport) =>
@@ -18,7 +17,7 @@ const SportsSelection = ({ searchQuery }: { searchQuery: string }) => {
     );
 
     return (
-        <div className="flex flex-col gap-4 mt-[20px] relative opacity-70 pb-[50px]">
+        <div className="relative flex flex-col gap-4 mt-[20px] opacity-70 pb-[50px]">
             {filteredSports.length > 0 ? (
                 filteredSports.map((sport) => (
                     <button
@@ -47,6 +46,8 @@ const SportsSelection = ({ searchQuery }: { searchQuery: string }) => {
             ) : (
                 <p className="text-center text-gray-500">No sports found</p>
             )}
+
+          
         </div>
     );
 };

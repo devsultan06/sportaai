@@ -1,9 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import SocialAuth from "../../components/layouts/SocialAuth";
 import Background from "../../components/ui/BackGround";
-import GradientButton from "../../components/ui/GradientButton";
-import TextField from "../../components/ui/TextField";
 import { useEffect } from "react";
 import RoleSelection from "./RoleSelection";
 
