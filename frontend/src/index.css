@@ -10,6 +10,22 @@ button.create {
   background: linear-gradient(90deg, #ffbb34 -2.75%, #ff256f 100%), #1a1a1a;
   box-shadow: 8px 8px 8px 0px rgba(255, 255, 255, 0.2) inset;
 }
+div.choose {
+  position: relative;
+  border: 3px solid transparent; /* Keeps the original space */
+}
+
+div.choose::before {
+  content: "";
+  position: absolute;
+  inset: 0; /* Covers the whole div */
+  padding: 3px; /* Border thickness */
+  border-radius: inherit;
+  background: linear-gradient(90deg, #ffbb34 -2.75%, #ff256f 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
 
 input:focus {
   border: 1px solid var(--gradient, #ffbb34);
@@ -20,7 +36,7 @@ button.apple {
   box-shadow: 2px 2px 8px 0px rgba(146, 179, 189, 0.2);
 }
 
-div.slide{
+div.slide {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -32,13 +48,21 @@ div.slide button {
   width: 10px;
   border-radius: 50%;
   background: #fff;
-
 }
 
-div.slide button.active{
+div.slide button.active {
   width: 40px;
   height: 10px;
   border-radius: 10px;
-  background: linear-gradient(90deg, #FFBB34 -2.75%, #FF256F 100%), #FFF;
+  background: linear-gradient(90deg, #ffbb34 -2.75%, #ff256f 100%), #fff;
+}
 
+div.sport p {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+div.code input {
+  background: transparent;
+  border: 1px solid var(--gradient, #ffbb34);
+  position: relative;
 }

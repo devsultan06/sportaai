@@ -40,6 +40,7 @@ export default {
     },
     fontFamily: {
       metrophobic: ["Metrophobic", "sans-serif"], // Add Metrophobic font
+      Nabla: ["Nabla", "system-ui"], // Add Nebla font
     },
     extend: {},
   },

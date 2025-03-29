@@ -25,7 +25,6 @@ const Onboarding = () => {
                 Skip
             </button>
 
-
             <Swiper
                 spaceBetween={50}
                 slidesPerView={1}
