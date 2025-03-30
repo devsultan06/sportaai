@@ -1,4 +1,4 @@
-import GradientButton from "../../components/ui/GradientButton";
+import { useEffect } from "react";
 
 const sportsOptions = [
     { id: 1, name: "Baseball", description: "America’s Pastime: Tradition, community, and timeless charm", logo: "/images/baseball.png" },
@@ -9,7 +9,25 @@ const sportsOptions = [
     { id: 6, name: "Wrestling", description: "Battle on the Gridiron: Power, strategy, and adrenaline", logo: "/images/baseball.png" },
 ];
 
-const SportsSelection = ({ searchQuery, selectedSport, setSelectedSport }: { searchQuery: string; selectedSport: number | null; setSelectedSport: (sportId: number) => void }) => {
+const SportsSelection = ({ searchQuery, selectedSport, setSelectedSport }: {
+    searchQuery: string;
+    selectedSport: number | null;
+    setSelectedSport: (sportId: number) => void
+}) => {
+
+    // Load selected sport from sessionStorage on mount
+    useEffect(() => {
+        const savedSport = sessionStorage.getItem("selectedSport");
+        if (savedSport) {
+            setSelectedSport(Number(savedSport));
+        }
+    }, []);
+
+    // Function to handle sport selection
+    const handleSelectSport = (sportId: number) => {
+        setSelectedSport(sportId);
+        sessionStorage.setItem("selectedSport", sportId.toString()); // Save to sessionStorage
+    };
 
     // Filter sports based on search input
     const filteredSports = sportsOptions.filter((sport) =>
@@ -22,7 +40,7 @@ const SportsSelection = ({ searchQuery, selectedSport, setSelectedSport }: { sea
                 filteredSports.map((sport) => (
                     <button
                         key={sport.id}
-                        onClick={() => setSelectedSport(sport.id)}
+                        onClick={() => handleSelectSport(sport.id)}
                         className={`flex items-center backdrop-blur-md justify-between px-4 py-4 gap-[30px] w-full bg-[#2A2A2A] rounded-lg transition-all 
                         ${selectedSport === sport.id ? "bg-green-500 text-white" : "bg-gray-800 text-gray-400"}`}
                     >
@@ -46,8 +64,6 @@ const SportsSelection = ({ searchQuery, selectedSport, setSelectedSport }: { sea
             ) : (
                 <p className="text-center text-gray-500">No sports found</p>
             )}
-
-          
         </div>
     );
 };

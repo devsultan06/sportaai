@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const roles = [
     { id: 1, name: "Athlete", color: "#1A1A1A", border: "#FFBB34" },
@@ -8,6 +8,18 @@ const roles = [
 
 const RoleSelection = () => {
     const [selectedRole, setSelectedRole] = useState<number | null>(null);
+
+    useEffect(() => {
+        const savedRole = sessionStorage.getItem("selectedRole");
+        if (savedRole) {
+            setSelectedRole(Number(savedRole));
+        }
+    }, []);
+
+    const handleSelectRole = (roleId: number) => {
+        setSelectedRole(roleId);
+        sessionStorage.setItem("selectedRole", roleId.toString());
+    };
 
     return (
         <div className="flex flex-col gap-4 items-center mt-10">
@@ -19,7 +31,7 @@ const RoleSelection = () => {
                     style={{ borderColor: role.border }}
                 >
                     <div
-                        onClick={() => setSelectedRole(role.id)}
+                        onClick={() => handleSelectRole(role.id)}
                         style={{
                             backgroundColor: role.border,
                             borderColor: role.border,
@@ -28,12 +40,7 @@ const RoleSelection = () => {
                         relative transition-all duration-300 cursor-pointer ${selectedRole === role.id ? "scale-125 shadow-lg border-solid" : ""
                             }`}
                     >
-                        <span style={{
-                            color: role.color,
-
-                        }}>
-                            {role.name}
-                        </span>
+                        <span style={{ color: role.color }}>{role.name}</span>
                         <span className="text-white">
                             <img
                                 src={role.name === "Athlete" ? "/images/continue2.png" : "/images/continue.png"}
