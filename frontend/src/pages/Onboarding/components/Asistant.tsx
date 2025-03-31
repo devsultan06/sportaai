@@ -28,9 +28,9 @@ const Assistant = ({ swiperRef }: { swiperRef: any }) => {
                 </div>
 
                 <div className="slide mb-[30px]">
-                    <button onClick={() => swiperRef?.slideTo(0)}></button>
-                    <button onClick={() => swiperRef?.slideTo(1)}></button>
-                    <button onClick={() => swiperRef?.slideTo(2)} className="active"></button>
+                    <button onClick={() => swiperRef && swiperRef.slideTo(0)}></button>
+                    <button onClick={() => swiperRef && swiperRef.slideTo(1)}></button>
+                    <button onClick={() => swiperRef && swiperRef.slideTo(2)} className="active"></button>
                 </div>
 
                 <h1 className="text-white text-[30px] font-bold mb-[5px] w-[300px] mx-auto text-center">Meet Your AI Sports Assitant </h1>
@@ -39,7 +39,7 @@ const Assistant = ({ swiperRef }: { swiperRef: any }) => {
                 </p>
 
                 <div className="mt-[20px] w-[200px] mx-auto ">
-                    <GradientButton text="Get Started" icon="/images/continue.png" onClick={goAuth} />
+                    <GradientButton text="Get Started" icon="/images/arrow3.png" onClick={goAuth} />
                 </div>
             </div>
         </div>

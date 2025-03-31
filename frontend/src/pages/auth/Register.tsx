@@ -27,13 +27,10 @@ const Register = () => {
             >
                 <div className="text-white text-center bg-opacity-50 rounded-lg">
                     <h1 className="text-white text-[30px] font-bold">Create account</h1>
-                    <p className="w-[300px] text-center mx-auto opacity-80 shadow-md">
-                        Enter personal details to create a new account now
-                    </p>
 
-                    <form className="flex w-[420px] max-600:w-[300px] flex-col items-start mt-[30px] mx-auto"
+                    <form className="flex w-[480px] max-600:w-[300px] flex-col items-start mt-[30px] mx-auto"
                         onSubmit={goAuth}>
-                        <TextField label="Full Name" type="text" placeholder="Enter full name" icon="/images/User.png" />
+                        <TextField label="Full Name" type="text" placeholder="(First, Middle (Optional), Last name) e.g Joe William Alex" icon="/images/User.png" />
                         <TextField label="Email address" type="email" placeholder="Enter email address" icon="/images/envelope.png" />
                         <TextField label="Password" type="password" placeholder="Enter password" icon="/images/Lock.png" />
                         <TextField label="Confirm Password" type="password" placeholder="Confirm Password" icon="/images/Lock.png" />

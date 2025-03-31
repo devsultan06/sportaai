@@ -13,9 +13,9 @@ const Home = ({ swiperRef }: { swiperRef: any }) => {
             <div className="text-white text-center bg-opacity-50 rounded-lg">
                 <img src="/images/logo.png" alt="Logo" className="mx-auto mb-[100px]" />
                 <div className="slide mb-[30px]">
-                    <button onClick={() => swiperRef?.slideTo(0)} className="active"></button>
-                    <button onClick={() => swiperRef?.slideTo(1)}></button>
-                    <button onClick={() => swiperRef?.slideTo(2)}></button>
+                    <button  onClick={() => swiperRef && swiperRef.slideTo(0)} className="active"></button>
+                    <button  onClick={() => swiperRef && swiperRef.slideTo(1)}></button>
+                    <button  onClick={() => swiperRef && swiperRef.slideTo(2)}></button>
                 </div>
 
                 <h1 className="text-white text-[30px] font-bold mb-[5px] w-[300px] mx-auto text-center">
@@ -26,7 +26,7 @@ const Home = ({ swiperRef }: { swiperRef: any }) => {
                 </p>
 
                 <div className="mt-[20px] w-[200px] mx-auto">
-                    <GradientButton text="Continue" icon="/images/continue.png" onClick={() => swiperRef?.slideNext()} />
+                    <GradientButton text="Continue" icon="/images/arrow3.png" onClick={() => swiperRef?.slideNext()} />
                 </div>
             </div>
         </div>
