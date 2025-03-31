@@ -1,9 +1,9 @@
 from django.urls import path
-from .views import IndexView
+# from .views import IndexView
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 urlpatterns = [
-    path('index/', IndexView.as_view(), name='index'),
+    # path('index/', IndexView.as_view(), name='index'),
 
     # Spectacular Schema & Swagger UI
     path("schema/", SpectacularAPIView.as_view(), name="schema"),
