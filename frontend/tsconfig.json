@@ -9,6 +9,7 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "types": ["swiper"]
+    "types": ["swiper"], 
+    "typeRoots": ["node_modules/@types", "./src/types"],
   }
 }
