@@ -34,9 +34,7 @@ const Login = () => {
                         <img src="/images/logo.png" alt="Logo" className="mx-auto mb-[60px] mt-[30px]" />
                     </div>
                     <h1 className="text-white text-[30px] font-bold mb-[5px]">Login to your account</h1>
-                    <p className="w-[250px] text-center mx-auto opacity-80 shadow-md">
-                        Enter your details to login to your account
-                    </p>
+
 
                     <form className="flex w-[420px] max-600:w-[300px] flex-col items-start mt-[30px] mx-auto">
                         <TextField

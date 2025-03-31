@@ -1,7 +1,6 @@
 // @ts-ignore
 /* eslint-disable */
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import { useState } from "react";
@@ -30,8 +29,7 @@ const Onboarding = () => {
                 slidesPerView={1}
                 onSwiper={setSwiperRef}
                 pagination={{ clickable: true }}
-                autoplay={{ delay: 3000, disableOnInteraction: false }}
-                modules={[Autoplay]}
+
                 className="relative z-10"
             >
                 <SwiperSlide>
