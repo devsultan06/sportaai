@@ -3,7 +3,7 @@ from urllib.parse import urlparse
 
 DEBUG = False
 
-ALLOWED_HOSTS = ["sportaai.onrender.com"]
+ALLOWED_HOSTS = ["sportaai.onrender.com",]
 
 
 tmpPostgres = urlparse(config("DATABASE_URL"))
