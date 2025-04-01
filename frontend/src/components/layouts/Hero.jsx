@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 
 const Hero = () => {
   return (
@@ -13,11 +14,17 @@ const Hero = () => {
         desktop.
       </p>
       <div
-        className="flex justify-center items-center gap-3 font-metropolisBold 
-                max-860:flex max-860:flex-col max-860:items-center max-860:text-center mt-6"
+        className="flex justify-center items-center gap-5 font-metropolisBold 
+                max-860:flex max-860:flex-col max-860:gap-5 max-860:items-center max-860:text-center mt-6"
       >
         <div className="w-[200px] max-860:w-[250px]">
-          <button
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            whileHover={{ scale: 1.1 }}
+            transition={{
+              bounceDamping: 10,
+              bounceStiffness: 600,
+            }}
             type="button"
             className="flex create w-full justify-center items-center gap-2 h-[50px] px-3 text-[#1A1A1A] text-[13px] rounded-[1000px] hover:opacity-90 transition-all"
           >
@@ -27,10 +34,16 @@ const Hero = () => {
               alt="Button Icon"
               className="w-6 h-5"
             />
-          </button>
+          </motion.button>
         </div>
         <div className="w-[200px] max-860:w-[250px]">
-          <button
+          <motion.button
+           whileTap={{ scale: 0.9 }}
+           whileHover={{ scale: 1.1 }}
+           transition={{
+             bounceDamping: 10,
+             bounceStiffness: 600,
+           }}
             type="button"
             onClick={() =>
               window.open(`${window.location.origin}/onboarding`, "_blank")
@@ -39,7 +52,7 @@ const Hero = () => {
           >
             Explore on Desktop
             <img src="/images/up.png" alt="Button Icon" className="w-8 h-8" />
-          </button>
+          </motion.button>
         </div>
       </div>
       <div className="flex justify-center mt-10  max-860:w-[250px]  max-860:text-center  max-860:mx-auto">

@@ -38,7 +38,13 @@ const Header = () => {
       </nav>
 
       <div className="w-[170px] max-860:hidden">
-        <button
+        <motion.button
+          whileTap={{ scale: 0.9 }}
+          whileHover={{ scale: 1.1 }}
+          transition={{
+            bounceDamping: 10,
+            bounceStiffness: 600,
+          }}
           type="button"
           className="flex create w-full font-metropolisBold justify-center items-center gap-2 h-[50px] px-1 text-[#1A1A1A] text-[13px] font-bold rounded-[1000px] hover:opacity-90 transition-all"
         >
@@ -48,7 +54,7 @@ const Header = () => {
             alt="Button Icon"
             className="w-6 h-5"
           />
-        </button>
+        </motion.button>
       </div>
 
       <div
@@ -105,7 +111,13 @@ const Header = () => {
             </ul>
 
             <div className="w-[170px]">
-              <button
+              <motion.button
+                whileTap={{ scale: 0.9 }}
+                whileHover={{ scale: 1.1 }}
+                transition={{
+                  bounceDamping: 10,
+                  bounceStiffness: 600,
+                }}
                 type="button"
                 className="flex create w-full font-metropolisBold justify-center items-center gap-2 h-[50px] px-1 text-[#1A1A1A] text-[13px] font-bold rounded-[1000px] hover:opacity-90 transition-all"
               >
@@ -115,7 +127,7 @@ const Header = () => {
                   alt="Button Icon"
                   className="w-6 h-5"
                 />
-              </button>
+              </motion.button>
             </div>
           </motion.div>
         )}
