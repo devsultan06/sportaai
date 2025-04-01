@@ -1,8 +1,8 @@
-const Background = ({ children, bgImage }: { children: React.ReactNode; bgImage: string }) => {
+const Background = ({ children, bgImage }) => {
     return (
         <div
             className="font-metropolis w-full min-h-screen bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url(${bgImage})` }} // Dynamically set bg image
+            style={{ backgroundImage: `url(${bgImage})` }} 
         >
             {children}
         </div>

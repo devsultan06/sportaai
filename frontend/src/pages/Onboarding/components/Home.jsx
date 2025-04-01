@@ -1,7 +1,7 @@
 import GradientButton from "../../../components/ui/GradientButton";
 import ImageGrid from "./ImageGallery";
 
-const Home = ({ swiperRef }: { swiperRef: any }) => {
+const Home = ({ swiperRef }) => {
 
     return (
 

@@ -7,13 +7,13 @@ import GradientButton from "../../components/ui/GradientButton";
 const Verification = () => {
     const navigate = useNavigate();
     const [otp, setOtp] = useState(["", "", "", ""]);
-    const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+    const inputRefs = useRef([]);
 
     useEffect(() => {
         document.title = "Login | Sporta AI";
     }, []);
 
-    const handleChange = (index: number, value: string) => {
+    const handleChange = (index, value) => {
         if (value.match(/^[0-9]$/)) {
             const newOtp = [...otp];
             newOtp[index] = value;
@@ -25,7 +25,7 @@ const Verification = () => {
         }
     };
 
-    const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+    const handleKeyDown = (index, e) => {
         if (e.key === "Backspace") {
             const newOtp = [...otp];
             newOtp[index] = "";

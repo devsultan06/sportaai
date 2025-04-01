@@ -1,6 +1,6 @@
 import React from "react";
 
-const Header: React.FC = () => {
+const Header = () => {
   return (
     <header className="w-full nav max-w-4xl px-6 py-3 mt-[30px] flex justify-between items-center">
       <div className="logo opacity-90">

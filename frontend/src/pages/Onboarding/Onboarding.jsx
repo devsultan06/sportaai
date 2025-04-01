@@ -1,5 +1,3 @@
-// @ts-ignore
-/* eslint-disable */
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -16,7 +14,7 @@ const Onboarding = () => {
     }, []);
 
     const navigate = useNavigate();
-    const [swiperRef, setSwiperRef] = useState<any>(null);
+    const [swiperRef, setSwiperRef] = useState(null);
 
     return (
         <Background bgImage="/images/bg.png">

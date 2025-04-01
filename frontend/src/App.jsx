@@ -24,12 +24,6 @@ const App = () => {
         <Route path="/verify" element={<Verification />} />
 
 
-
-
-
-        {/* <Route path="/get-started/login" element={<Auth />} />
-        <Route path="/get-started/register" element={<Auth />} />
-        <Route path="/home" element={<ProtectedRoute element={<Home />} />} /> */}
       </Routes>
     </BrowserRouter>
   );

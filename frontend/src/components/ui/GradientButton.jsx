@@ -3,11 +3,6 @@ const GradientButton = ({
     icon,
     onClick,
     type = "button"
-}: {
-    text: string;
-    icon?: string;
-    onClick?: () => void;
-    type?: "button" | "submit" | "reset";
 }) => {
     return (
         <button

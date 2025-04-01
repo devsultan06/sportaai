@@ -7,7 +7,7 @@ const roles = [
 ];
 
 const RoleSelection = () => {
-    const [selectedRole, setSelectedRole] = useState<number | null>(null);
+    const [selectedRole, setSelectedRole] = useState(null);
 
     useEffect(() => {
         const savedRole = sessionStorage.getItem("selectedRole");
@@ -16,7 +16,7 @@ const RoleSelection = () => {
         }
     }, []);
 
-    const handleSelectRole = (roleId: number) => {
+    const handleSelectRole = (roleId) => {
         setSelectedRole(roleId);
         sessionStorage.setItem("selectedRole", roleId.toString());
     };

@@ -12,7 +12,7 @@ const Register = () => {
         document.title = "Register | Sporta AI";
     }, []);
 
-    const goAuth = (event: React.FormEvent) => {
+    const goAuth = (event) => {
         event.preventDefault();
         navigate("/verify");
     }

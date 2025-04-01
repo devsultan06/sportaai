@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const SocialAuth = ({ type }: { type: string }) => {
+const SocialAuth = ({ type }) => {
 
     return (
         <div className="flex flex-col items-center justify-center w-full mt-[20px] text-center space-y-4">

@@ -6,7 +6,7 @@ import GradientButton from "../../components/ui/GradientButton";
 const Sport = () => {
     const navigate = useNavigate();
     const [searchQuery, setSearchQuery] = useState("");
-    const [selectedSport, setSelectedSport] = useState<number | null>(null);
+    const [selectedSport, setSelectedSport] = useState(null);
 
 
     useEffect(() => {

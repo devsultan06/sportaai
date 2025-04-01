@@ -1,6 +1,6 @@
 import GradientButton from "../../../components/ui/GradientButton";
 
-const Watch = ({ swiperRef }: { swiperRef: any }) => {
+const Watch = ({ swiperRef }) => {
 
     return (
 

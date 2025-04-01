@@ -4,17 +4,17 @@
 
 @font-face {
   font-family: "Nebula";
-  src: url(../public/fonts/nebula/Nebula-Regular.otf);
+  src: url(/fonts/nebula/Nebula-Regular.otf);
 }
 
 @font-face {
   font-family: "Metropolis";
-  src: url(../public/fonts/metropolis/Metropolis-Regular.otf);
+  src: url(/fonts/metropolis/Metropolis-Regular.otf);
 }
 
 @font-face {
   font-family: "MetropolisBold";
-  src: url(../public/fonts/metropolis/Metropolis-Bold.otf);
+  src: url(/fonts/metropolis/Metropolis-Bold.otf);
 }
 
 body {
@@ -27,14 +27,14 @@ button.create {
 }
 div.choose {
   position: relative;
-  border: 3px solid transparent; /* Keeps the original space */
+  border: 3px solid transparent; 
 }
 
 div.choose::before {
   content: "";
   position: absolute;
-  inset: 0; /* Covers the whole div */
-  padding: 3px; /* Border thickness */
+  inset: 0; 
+  padding: 3px;
   border-radius: inherit;
   background: linear-gradient(90deg, #ffbb34 -2.75%, #ff256f 100%);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -101,7 +101,6 @@ div.code input {
   -webkit-text-fill-color: transparent;
   font-family: cursive;
   font-family: "Nebula", cursive;
-
 }
 
 .header-para {
@@ -121,4 +120,15 @@ button.second {
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.send-box {
+  border-radius: 100px;
+  border: 1.235px solid rgba(255, 255, 255, 0.12);
+
+  background: #2c2c2e;
+}
+
+.send-box input {
+  background: transparent;
 }
