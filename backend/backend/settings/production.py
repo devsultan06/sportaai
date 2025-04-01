@@ -3,6 +3,8 @@ from urllib.parse import urlparse
 
 DEBUG = False
 
+ALLOWED_HOSTS = ["*"]
+
 
 tmpPostgres = urlparse(config("DATABASE_URL"))
 DATABASES = {
@@ -47,3 +49,10 @@ STORAGES = {
         "OPTIONS": {"location": STATICFILES_LOCATION},
     },
 }
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "https://sportaai.vercel.app/",
+]
+
+CORS_ALLOW_CREDENTIALS = True
