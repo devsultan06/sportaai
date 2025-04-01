@@ -16,7 +16,7 @@ const Landing = () => {
                 initial={{ opacity: 0,  }}
                 animate={{ opacity: 1, }}
                 transition={{ duration: 2.5, ease: "easeOut" }}
-                className="flex flex-col justify-center items-center text-white h-fit max-860:px-4"
+                className="flex flex-col justify-center items-center text-white h-fit max-860:px-2"
             >
                 <Header />
                 <Hero />
