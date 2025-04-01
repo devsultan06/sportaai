@@ -1,15 +1,59 @@
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
-# from .models import User
+from djoser.serializers import (
+    UserSerializer,
+    UserCreateSerializer,
+    PasswordResetConfirmSerializer,
+)
+from .utils import verify_otp
 
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
+User = get_user_model()
+
+
+class SportaUserSerializer(UserSerializer):
+    class Meta(UserSerializer.Meta):
         model = User
-        fields = ('id', 'username', 'password')
-        extra_kwargs = {'password': {'write_only': True}}
+        fields = (
+            "id",
+            "email",
+            "full_name",
+            "password",
+            "avatar",
+            "role",
+            "sport",
+        )
 
 
-# class AthletesSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Athletes
-#         fields = '__all__'
+class SportaUserCreateSerializer(UserCreateSerializer):
+    class Meta(UserCreateSerializer.Meta):
+        model = User
+        fields = (
+            "id",
+            "email",
+            "full_name",
+            "avatar",
+            "role",
+            "sport",
+        )
+
+
+class SportaResetConfirm(PasswordResetConfirmSerializer):
+    email = serializers.EmailField()
+    otp = serializers.CharField()
+    uid = serializers.CharField(required=False)
+    token = serializers.CharField(required=False)
+
+    def validate(self, attrs):
+        otp = attrs.get("otp")
+        email = attrs.get("email")
+
+        if not verify_otp(email, otp):
+            raise serializers.ValidationError("OTP expired or doesn't exist, Request for another OTP")
+
+        try:
+            user = User.objects.get(email=email)
+            self.user = user
+        except User.DoesNotExist:
+            raise serializers.ValidationError("User with this email does not exist.")
+
+        return attrs

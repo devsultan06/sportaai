@@ -1,5 +1,4 @@
 from django.urls import path
-# from .views import IndexView
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 urlpatterns = [

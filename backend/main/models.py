@@ -23,7 +23,7 @@ class SportaUserManager(BaseUserManager):
     
     def create_superuser(self, email, password, **extra_fields):
         extra_fields.setdefault("is_staff", True)
-        extra_fields.setdefault("is_supersuser", True)
+        extra_fields.setdefault("is_superuser", True)
         
         return self.create_user(email, password, **extra_fields)
 
@@ -36,9 +36,9 @@ class SportaUser(AbstractUser):
 
     username = None
     email = models.EmailField(unique = True)
-    first_name = models.CharField(max_length=150)
-    middle_name = models.CharField(max_length=150, blank=True)
-    last_name = models.CharField(max_length=150)
+    first_name = None
+    last_name =None
+    full_name = models.CharField(max_length=350, blank=True)
     avatar = models.ImageField(upload_to=rename_avatar, blank=True)
     role = models.CharField(max_length=10, choices=ROLES_CHOICES, blank=True)
     sport = models.CharField(max_length=100, blank=True)
