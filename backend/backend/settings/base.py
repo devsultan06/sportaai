@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "drf_spectacular_sidecar",
     "rest_framework_simplejwt",
     "djoser",
+    "storages",
     # Local apps
     "main.apps.MainConfig",
 ]
