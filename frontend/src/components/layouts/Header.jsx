@@ -2,7 +2,7 @@ import React from "react";
 
 const Header = () => {
   return (
-    <header className="w-full nav max-w-4xl px-6 py-3 mt-[30px] flex justify-between items-center">
+    <header className="w-full nav max-w-4xl px-6 py-3 mt-[30px] h-[70px] flex justify-between items-center">
       <div className="logo opacity-90">
         <img src="/images/logonav.png" alt="Logo" className="w-32 mt-[-10px]" />
       </div>
@@ -11,7 +11,7 @@ const Header = () => {
         <a href="#" className=" hover:text-[#FFBB34]">About</a>
         <a href="#" className=" hover:text-[#FFBB34]">Blog</a>
       </nav>
-      <div className="w-[170px]">
+      <div className="w-[170px] max-860:hidden ">
         <button
           type="button"
 
