@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Nebula";
+  src: url(/fonts/nebula/Nebula-Regular.otf);
+}
+
+@font-face {
+  font-family: "Metropolis";
+  src: url(/fonts/metropolis/Metropolis-Regular.otf);
+}
+
+@font-face {
+  font-family: "MetropolisBold";
+  src: url(/fonts/metropolis/Metropolis-Bold.otf);
+}
+
 body {
   overflow-x: hidden;
 }
@@ -12,14 +27,14 @@ button.create {
 }
 div.choose {
   position: relative;
-  border: 3px solid transparent; /* Keeps the original space */
+  border: 3px solid transparent; 
 }
 
 div.choose::before {
   content: "";
   position: absolute;
-  inset: 0; /* Covers the whole div */
-  padding: 3px; /* Border thickness */
+  inset: 0; 
+  padding: 3px;
   border-radius: inherit;
   background: linear-gradient(90deg, #ffbb34 -2.75%, #ff256f 100%);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -65,4 +80,55 @@ div.code input {
   background: transparent;
   border: 1px solid var(--gradient, #ffbb34);
   position: relative;
+}
+
+.nav {
+  border-radius: 500px;
+  border: 1px solid #37393c;
+  background: rgba(30, 30, 30, 0.2);
+  box-shadow: 0px 1px 4px 0px rgba(38, 40, 46, 0.37);
+  backdrop-filter: blur(2px);
+}
+
+.launching {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.header-text {
+  background: linear-gradient(180deg, #fff 25%, #0c1711 343.26%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: cursive;
+  font-family: "Nebula", cursive;
+}
+
+.header-para {
+  background: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0) 432.86%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+button.second {
+  border-radius: 100px;
+  border: 1px solid var(--gradient, #ffbb34);
+  box-shadow: 0px 1px 2px 0px rgba(62, 34, 13, 0.5), 0px 0px 0px 2px #671d13;
+  background: var(
+    --gradient,
+    linear-gradient(270deg, #ffbb34 0%, #ff256f 120.55%)
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.send-box {
+  border-radius: 100px;
+  border: 1.235px solid rgba(255, 255, 255, 0.12);
+
+  background: #2c2c2e;
+}
+
+.send-box input {
+  background: transparent;
 }
