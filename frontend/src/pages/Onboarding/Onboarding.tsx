@@ -3,7 +3,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Background from "../../components/ui/BackGround";
 import Home from "./components/Home";
@@ -11,6 +11,10 @@ import Watch from "./components/Watch";
 import Assistant from "./components/Asistant";
 
 const Onboarding = () => {
+    useEffect(() => {
+        document.title = "Onboarding | Sporta AI";
+    }, []);
+
     const navigate = useNavigate();
     const [swiperRef, setSwiperRef] = useState<any>(null);
 

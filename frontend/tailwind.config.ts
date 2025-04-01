@@ -39,7 +39,8 @@ export default {
       xxl: "2.5rem",
     },
     fontFamily: {
-      metrophobic: ["Metrophobic", "sans-serif"], // Add Metrophobic font
+      metropolis: ["Metropolis", "sans-serif"], // Add Metrophobic font
+      metropolisBold: ["MetropolisBold", "sans-serif"], // Add Metrophobic font
       Nabla: ["Nabla", "system-ui"], // Add Nebla font
     },
     extend: {},
