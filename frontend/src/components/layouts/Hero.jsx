@@ -43,11 +43,11 @@ const Hero = () => {
         </div>
       </div>
       <div className="flex justify-center mt-10  max-860:w-[250px]  max-860:text-center  max-860:mx-auto">
-        <img src="/images/iphone.png" alt="Mobile App" className="z-10" />
+        <img src="/images/iphone.png" alt="Mobile App" className="z-1" />
         <img
           src="/images/desktop.png"
           alt="Desktop App"
-          className="-ml-[110px] mt-[80px] z-1"
+          className="-ml-[110px] mt-[80px] z-[-1]"
         />
       </div>
     </section>
