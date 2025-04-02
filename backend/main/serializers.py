@@ -17,7 +17,6 @@ class SportaUserSerializer(UserSerializer):
             "id",
             "email",
             "full_name",
-            "password",
             "avatar",
             "role",
             "sport",
