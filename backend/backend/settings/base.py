@@ -26,6 +26,8 @@ SECRET_KEY = "django-insecure-0)r=o6ttofcsa@xg09%a%!57m%eow0a=)$i#3xm*gofd3-$4og
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
+ALLOWED_HOSTS = ["sportaai.onrender.com", "localhost", "127.0.0.1"]
+
 # Application definition
 
 INSTALLED_APPS = [

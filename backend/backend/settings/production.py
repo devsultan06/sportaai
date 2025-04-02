@@ -3,9 +3,6 @@ from urllib.parse import urlparse
 
 DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
-
-
 tmpPostgres = urlparse(config("DATABASE_URL"))
 DATABASES = {
     "default": {
