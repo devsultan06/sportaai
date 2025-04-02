@@ -2,7 +2,7 @@ from django.http import JsonResponse
 
 # from .schemas import AthleteSchema
 # from .models import SportaUser
-from .serializers import SportaResetConfirm, UserCreateSerializer
+from .serializers import ActivateUserSerializer
 # from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -16,6 +16,7 @@ from rest_framework.generics import ListCreateAPIView
 User = get_user_model()
 
 class ActivateUserView(APIView):
+    serializer_class = ActivateUserSerializer
     def post(self, request):
         email = request.data.get("email")
         user_otp = request.data.get("otp")

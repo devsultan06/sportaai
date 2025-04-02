@@ -57,3 +57,7 @@ class SportaResetConfirm(PasswordResetConfirmSerializer):
             raise serializers.ValidationError("User with this email does not exist.")
 
         return attrs
+
+class ActivateUserSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    otp = serializers.CharField()
