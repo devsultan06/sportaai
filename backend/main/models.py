@@ -38,7 +38,7 @@ class SportaUser(AbstractUser):
     email = models.EmailField(unique = True)
     first_name = None
     last_name =None
-    full_name = models.CharField(max_length=350, blank=True)
+    full_name = models.CharField(max_length=350)
     avatar = models.ImageField(upload_to=rename_avatar, blank=True)
     role = models.CharField(max_length=10, choices=ROLES_CHOICES, blank=True)
     sport = models.CharField(max_length=100, blank=True)
