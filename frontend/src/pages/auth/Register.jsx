@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import registerSchema from "../../schemas/registerSchema";
 import { registerUser } from "../../api/auth";
-import CustomSnackBar from "../../components/ui/CustomSnackBar";
+import Modal from "../../components/ui/Modal";
 
 const Register = () => {
   const [loading, setLoading] = useState(false);
@@ -49,7 +49,6 @@ const Register = () => {
       console.log("Registration Successful:", result);
       navigate("/verify", { state: { email } });
     } catch (error) {
-
       console.log(error);
       console.error("Registration Error:", error.response?.data);
       const errorMessage =
@@ -131,7 +130,7 @@ const Register = () => {
         </div>
       </motion.div>
 
-      <CustomSnackBar
+      <Modal
         open={snackbarData.open}
         onClose={() => setSnackbarData({ ...snackbarData, open: false })}
         severity={snackbarData.severity}

@@ -1,7 +1,7 @@
 import { Snackbar, Alert } from "@mui/material";
 import { motion } from "framer-motion";
 
-const CustomSnackBar = ({ open, onClose, severity = "error", message = "", bgColor }) => {
+const Modal = ({ open, onClose, severity = "error", message = "", bgColor }) => {
   const defaultBgColors = {
     error: "#D32F2F",
     success: "#2E7D32",
@@ -37,4 +37,4 @@ const CustomSnackBar = ({ open, onClose, severity = "error", message = "", bgCol
   );
 };
 
-export default CustomSnackBar;
+export default Modal;
