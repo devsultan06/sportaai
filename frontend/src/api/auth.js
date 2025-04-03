@@ -64,6 +64,62 @@ export const loginUser = async (email, password) => {
   }
 };
 
+export const requestPasswordReset = async (email) => {
+  try {
+    const response = await fetch(`${BASE_URL}/users/reset_password/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    });
+
+    if (response.status === 204) {
+      console.log("Password reset email sent successfully (204 No Content)");
+      return { message: "Password reset email sent successfully" };
+    }
+
+    let result;
+    const text = await response.text();
+    result = text ? JSON.parse(text) : {};
+
+    if (!response.ok) {
+      throw new Error(result.message || "Password reset request failed");
+    }
+
+    console.log("Password reset email sent:", result);
+    return result;
+  } catch (error) {
+    console.error("Error during password reset request:", error);
+    throw error;
+  }
+};
+
+export const resetPasswordConfirm = async ({ email, otp, newPassword, confirmNewPassword }) => {
+  try {
+    const response = await fetch(`${BASE_URL}/users/reset_password_confirm/`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, otp, new_password: newPassword, re_new_password: confirmNewPassword }),
+    });
+
+    if (response.status === 204) {
+      console.log("Password reset successful (204 No Content)");
+      return { success: true, message: "Password reset successful" };
+    }
+
+    const result = await response.json();
+    if (!response.ok) {
+      throw new Error(result.message || "Failed to reset password");
+    }
+
+    return { success: true, message: result.message };
+  } catch (error) {
+    console.error("Error resetting password:", error);
+    return { success: false, message: error.message };
+  }
+};
+
 const refreshAccessToken = async () => {
   try {
     const response = await fetch(`${BASE_URL}/refresh-token/`, {
