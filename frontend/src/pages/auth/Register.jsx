@@ -47,7 +47,8 @@ const Register = () => {
       };
       const result = await registerUser(payload);
       console.log("Registration Successful:", result);
-      navigate("/verify", { state: { email } });
+      localStorage.setItem("registeredEmail", email);
+      navigate("/verify");
     } catch (error) {
       console.log(error);
       console.error("Registration Error:", error.response?.data);
