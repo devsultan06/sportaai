@@ -6,9 +6,8 @@ import GradientButton from "../../components/ui/GradientButton";
 import { verifyOtp } from "../../api/auth";
 
 const Verification = () => {
+  const email = localStorage.getItem("registeredEmail");
   const navigate = useNavigate();
-  const location = useLocation();
-  const { email } = location.state || {};
   const [otp, setOtp] = useState(["", "", "", ""]);
   const inputRefs = useRef([]);
   const [loading, setLoading] = useState(false);
@@ -20,7 +19,7 @@ const Verification = () => {
     } else {
       document.title = "Verify OTP | Sporta AI";
     }
-  }, [email, navigate]);
+  }, [navigate]);
 
   const handleChange = (index, value) => {
     if (value.match(/^[0-9]$/)) {
@@ -55,7 +54,9 @@ const Verification = () => {
       try {
         const result = await verifyOtp(email, enteredOtp);
         console.log("User verified successfully:", result);
-        navigate("/login", { state: { email } });
+        localStorage.setItem("verifiedEmail", email);
+        localStorage.removeItem("registeredEmail");
+        navigate("/login");
       } catch (error) {
         console.error("Verification failed:", error);
         setError("Verification failed. Please try again.");

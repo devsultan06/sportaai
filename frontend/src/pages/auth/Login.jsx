@@ -12,11 +12,10 @@ import { loginUser } from "../../api/auth";
 
 const Login = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const [loading, setLoading] = useState(false); 
-  const [error, setError] = useState(""); 
-  const { email } = location.state || {};
-
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const storedEmail = localStorage.getItem("verifiedEmail") || "";
+  const [email, setEmail] = useState(storedEmail);
   useEffect(() => {
     document.title = "Login | Sporta AI";
   }, []);
@@ -34,7 +33,7 @@ const Login = () => {
       setLoading(true);
       setError("");
 
-      const { password } = data;
+      const { email, password } = data;
       console.log("Login Data:", data);
 
       const result = await loginUser(email, password);
