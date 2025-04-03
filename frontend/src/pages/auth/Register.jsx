@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import registerSchema from "../../schemas/registerSchema";
 import { registerUser } from "../../api/auth";
-import CustomSnackbar from "../../components/ui/CustomSnackBar";
+import CustomSnackBar from "../../components/ui/CustomSnackBar";
 
 const Register = () => {
   const [loading, setLoading] = useState(false);
@@ -131,7 +131,7 @@ const Register = () => {
         </div>
       </motion.div>
 
-      <CustomSnackbar
+      <CustomSnackBar
         open={snackbarData.open}
         onClose={() => setSnackbarData({ ...snackbarData, open: false })}
         severity={snackbarData.severity}
