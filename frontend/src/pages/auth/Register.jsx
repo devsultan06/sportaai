@@ -109,7 +109,7 @@ const Register = () => {
             <TextField
               label="Confirm Password"
               type="password"
-              placeholder="Confirm Password"
+              placeholder="Confirm Password "
               icon="/images/Lock.png"
               {...register("confirmPassword")}
               error={errors.confirmPassword?.message}
