@@ -34,7 +34,7 @@ const Login = () => {
       setLoading(true);
       setError("");
 
-      const { password } = data;
+      const {email, password } = data;
       console.log("Login Data:", data);
 
       const result = await loginUser(email, password);
