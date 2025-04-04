@@ -13,7 +13,7 @@ const Verification = () => {
     loading,
     resendLoading,
     snackbarData,
-    setSnackbarData,
+    setSnackbarData,  
     handleChange,
     handleKeyDown,
     handleSubmit,
