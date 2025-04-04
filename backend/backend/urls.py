@@ -29,8 +29,7 @@ urlpatterns = [
     path("api/", include("main.urls")),
     path("api/auth/", include("djoser.urls")),
     path("api/auth/", include("djoser.urls.jwt")),
-    path("api/auth/activate-user/", ActivateUserView.as_view(), name="activate-user")
-    
+    path("api/auth/activate-user/", ActivateUserView.as_view(), name="activate-user")   
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
