@@ -7,7 +7,7 @@ import RoleSelection from "./RoleSelection";
 const Role = () => {
     const navigate = useNavigate();
     useEffect(() => {
-        document.title = "Login | Sporta AI";
+        document.title = "Role | Sporta AI";
     }, []);
 
     return (

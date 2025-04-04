@@ -8,7 +8,8 @@ import { z } from "zod";
 import Background from "../../../components/ui/BackGround";
 import GradientButton from "../../../components/ui/GradientButton";
 import TextField from "../../../components/ui/TextField";
-import { resetPasswordConfirm } from "../../../api/auth";
+import { resendActivationCode, resetPasswordConfirm } from "../../../api/auth";
+import Modal from "../../../components/ui/Modal";
 
 const schema = z
   .object({
@@ -23,10 +24,16 @@ const schema = z
 
 const SetNewPassword = () => {
   const navigate = useNavigate();
+  const email = localStorage.getItem("resetEmail");
   const [otp, setOtp] = useState(["", "", "", ""]);
   const inputRefs = useRef([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [snackbarData, setSnackbarData] = useState({
+    open: false,
+    message: "",
+    severity: "error",
+  });
+  const [resendLoading, setResendLoading] = useState(false);
 
   useEffect(() => {
     document.title = "Set New Password | Sporta AI";
@@ -36,7 +43,7 @@ const SetNewPassword = () => {
     register,
     handleSubmit,
     setValue,
-    formState: { errors},
+    formState: { errors },
   } = useForm({
     resolver: zodResolver(schema),
   });
@@ -46,7 +53,7 @@ const SetNewPassword = () => {
       const newOtp = [...otp];
       newOtp[index] = value;
       setOtp(newOtp);
-      setValue("otp", newOtp.join("")); 
+      setValue("otp", newOtp.join(""));
 
       if (index < 3 && inputRefs.current[index + 1]) {
         inputRefs.current[index + 1]?.focus();
@@ -59,7 +66,7 @@ const SetNewPassword = () => {
       const newOtp = [...otp];
       newOtp[index] = "";
       setOtp(newOtp);
-      setValue("otp", newOtp.join("")); 
+      setValue("otp", newOtp.join(""));
 
       if (index > 0 && inputRefs.current[index - 1]) {
         inputRefs.current[index - 1]?.focus();
@@ -68,13 +75,12 @@ const SetNewPassword = () => {
   };
 
   const onSubmit = async (data) => {
-    setLoading(true); 
-    setError(null); 
+    setLoading(true);
+    setSnackbarData({ open: false, message: "", severity: "error" });
 
-    const email = localStorage.getItem("resetEmail");
     if (!email) {
       setError("No email found. Please restart the reset process.");
-      setLoading(false); 
+      setLoading(false);
       return;
     }
 
@@ -82,9 +88,9 @@ const SetNewPassword = () => {
       const { otp, newPassword, confirmNewPassword } = data;
       const response = await resetPasswordConfirm({
         email,
-        otp: otp,
-        newPassword: newPassword,
-        confirmNewPassword: confirmNewPassword,
+        otp,
+        newPassword,
+        confirmNewPassword,
       });
 
       console.log("Password reset response:", response);
@@ -92,12 +98,52 @@ const SetNewPassword = () => {
       if (response.success) {
         navigate("/login");
       } else {
-        setError(response.message || "Failed to reset password.");
+        setSnackbarData({
+          open: true,
+          message: response.message,
+          severity: "error",
+        });
       }
-    } catch (err) {
-      setError("An error occurred while resetting the password.");
+    } catch (error) {
+      console.error("Unexpected error:", error);
+      setSnackbarData({
+        open: true,
+        message: "Something went wrong. Please try again.",
+        severity: "error",
+      });
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleResendCode = async () => {
+    if (!email) {
+      setSnackbarData({
+        open: true,
+        message: "Email not found. Please restart registration.",
+        severity: "error",
+      });
+      return;
+    }
+
+    setResendLoading(true);
+    setSnackbarData({ open: false, message: "", severity: "error" });
+
+    try {
+      const response = await resendActivationCode(email);
+      setSnackbarData({
+        open: true,
+        message: response.message,
+        severity: response.success ? "success" : "error",
+      });
+    } catch (error) {
+      setSnackbarData({
+        open: true,
+        message: error.message,
+        severity: "error",
+      });
+    } finally {
+      setResendLoading(false);
     }
   };
 
@@ -149,6 +195,17 @@ const SetNewPassword = () => {
             ))}
           </div>
 
+          <p className="text-white opacity-70 text-center mx-auto text-[15px] my-[40px]">
+            Didn't receive a code?
+            <button
+              onClick={handleResendCode}
+              disabled={resendLoading}
+              className="text-[#FFBB34] hover:underline ml-[5px] cursor-pointer disabled:opacity-50"
+            >
+              {resendLoading ? "Resending..." : "Resend"}
+            </button>
+          </p>
+
           <form
             className="flex w-[420px] max-600:w-[300px] flex-col items-start mt-[30px] mx-auto"
             onSubmit={handleSubmit(onSubmit)}
@@ -179,6 +236,12 @@ const SetNewPassword = () => {
             </div>
           </form>
         </div>
+        <Modal
+          open={snackbarData.open}
+          onClose={() => setSnackbarData({ ...snackbarData, open: false })}
+          severity={snackbarData.severity}
+          message={snackbarData.message}
+        />
       </motion.div>
     </Background>
   );

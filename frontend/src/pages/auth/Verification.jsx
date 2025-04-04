@@ -1,70 +1,31 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useEffect, useState, useRef } from "react";
+import { useEffect } from "react";
 import Background from "../../components/ui/BackGround";
 import GradientButton from "../../components/ui/GradientButton";
-import { verifyOtp } from "../../api/auth";
+import Modal from "../../components/ui/Modal";
+import useOtpVerification from "./hook/useOtpVerification";
 
 const Verification = () => {
-  const email = localStorage.getItem("registeredEmail");
+  const {
+    otp,
+    inputRefs,
+    loading,
+    resendLoading,
+    snackbarData,
+    setSnackbarData,
+    handleChange,
+    handleKeyDown,
+    handleSubmit,
+    handleResendCode,
+  } = useOtpVerification();
+
   const navigate = useNavigate();
-  const [otp, setOtp] = useState(["", "", "", ""]);
-  const inputRefs = useRef([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
   useEffect(() => {
-    if (!email) {
-      navigate("/register");
-    } else {
-      document.title = "Verify OTP | Sporta AI";
-    }
-  }, [navigate]);
+    document.title = "Verify OTP | Sporta AI";
+  }, []);
 
-  const handleChange = (index, value) => {
-    if (value.match(/^[0-9]$/)) {
-      const newOtp = [...otp];
-      newOtp[index] = value;
-      setOtp(newOtp);
-
-      if (index < 3 && inputRefs.current[index + 1]) {
-        inputRefs.current[index + 1]?.focus();
-      }
-    }
-  };
-
-  const handleKeyDown = (index, e) => {
-    if (e.key === "Backspace") {
-      const newOtp = [...otp];
-      newOtp[index] = "";
-      setOtp(newOtp);
-
-      if (index > 0 && inputRefs.current[index - 1]) {
-        inputRefs.current[index - 1]?.focus();
-      }
-    }
-  };
-
-  const handleSubmit = async () => {
-    const enteredOtp = otp.join("");
-    if (enteredOtp.length === 4) {
-      setLoading(true);
-      setError("");
-
-      try {
-        const result = await verifyOtp(email, enteredOtp);
-        console.log("User verified successfully:", result);
-        localStorage.setItem("verifiedEmail", email);
-        localStorage.removeItem("registeredEmail");
-        navigate("/login");
-      } catch (error) {
-        console.error("Verification failed:", error);
-        setError("Verification failed. Please try again.");
-      } finally {
-        setLoading(false);
-      }
-    }
-  };
   return (
     <Background bgImage="/images/bg.png">
       <button
@@ -117,13 +78,13 @@ const Verification = () => {
 
           <p className="text-white opacity-70 text-center mx-auto text-[15px] my-[40px]">
             Didn't receive a code?
-            <Link
-              to="resend"
-              className="text-[#FFBB34] hover:underline cursor-pointer"
+            <button
+              onClick={handleResendCode}
+              disabled={resendLoading}
+              className="text-[#FFBB34] hover:underline ml-[5px] cursor-pointer disabled:opacity-50"
             >
-              {" "}
-              Resend{" "}
-            </Link>
+              {resendLoading ? "Resending..." : "Resend"}
+            </button>
           </p>
 
           <div className="mt-[20px] w-full">
@@ -134,6 +95,13 @@ const Verification = () => {
             />
           </div>
         </div>
+
+        <Modal
+          open={snackbarData.open}
+          onClose={() => setSnackbarData({ ...snackbarData, open: false })}
+          severity={snackbarData.severity}
+          message={snackbarData.message}
+        />
       </motion.div>
     </Background>
   );
