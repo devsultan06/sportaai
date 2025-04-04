@@ -252,7 +252,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 DJOSER = {
     "LOGIN_FIELD": "email",
-    "USER_CREATE_PASSWORD_RETYPE": True,
+    "USER_CREATE_PASSWORD_RETYPE": False,
     "PASSWORD_CHANGED_EMAIL_CONFIRMATION": True,
     "SEND_ACTIVATION_EMAIL": True,
     "ACTIVATION_URL": "activation/",
@@ -262,6 +262,10 @@ DJOSER = {
         "users/set_username/",
         "users/reset_username/",
         "users/reset_username_confirm/",
+        "users/activation/",
+        "users/reset_email/",
+        "users/reset_email_confirm/",
+        "users/set_email/",
         "token/login/",
         "token/logout/",
     ],

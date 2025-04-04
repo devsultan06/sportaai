@@ -24,11 +24,31 @@ class SportaUserSerializer(UserSerializer):
 
 
 class SportaUserCreateSerializer(UserCreateSerializer):
+    re_password = serializers.CharField(
+        style={"input_field": "password"},
+        write_only=True,
+    )
+    
+    def validate(self, attrs):
+        password = attrs["password"]
+        re_password = attrs["re_password"]
+        
+        if password != re_password:
+            return serializers.ValidationError("Password do not match.")
+        
+        return attrs
+        
+    def create(self, validated_data):
+        validated_data.pop("re_password")
+        return super().create(validated_data)
+
     class Meta(UserCreateSerializer.Meta):
         model = User
         fields = (
             "id",
             "email",
+            "password",
+            "re_password",
             "full_name",
             "avatar",
             "role",
@@ -47,7 +67,9 @@ class SportaResetConfirm(PasswordResetConfirmSerializer):
         email = attrs.get("email")
 
         if not verify_otp(email, otp):
-            raise serializers.ValidationError("OTP expired or doesn't exist, Request for another OTP")
+            raise serializers.ValidationError(
+                "OTP expired or doesn't exist, Request for another OTP"
+            )
 
         try:
             user = User.objects.get(email=email)
@@ -56,6 +78,7 @@ class SportaResetConfirm(PasswordResetConfirmSerializer):
             raise serializers.ValidationError("User with this email does not exist.")
 
         return attrs
+
 
 class ActivateUserSerializer(serializers.Serializer):
     email = serializers.EmailField()
