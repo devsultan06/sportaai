@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link,  useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import SocialAuth from "../../components/layouts/SocialAuth";
 import Background from "../../components/ui/BackGround";
@@ -8,20 +8,14 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import loginSchema from "../../schemas/loginSchema";
-import { loginUser } from "../../api/auth";
 import Modal from "../../components/ui/Modal";
+import useLogin from "./hook/useLogin";
 
 const Login = () => {
+  const { handleLogin, loading, snackbarData, setSnackbarData } = useLogin();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   const storedEmail = localStorage.getItem("verifiedEmail") || "";
   const [email, setEmail] = useState(storedEmail);
-  const [snackbarData, setSnackbarData] = useState({
-    open: false,
-    message: "",
-    severity: "error",
-  });
   useEffect(() => {
     document.title = "Login | Sporta AI";
   }, []);
@@ -33,29 +27,6 @@ const Login = () => {
   } = useForm({
     resolver: zodResolver(loginSchema),
   });
-  const onSubmit = async (data) => {
-    try {
-      setLoading(true);
-      setSnackbarData({ open: false, message: "", severity: "error" });
-
-      const { email, password } = data;
-      console.log("Login Data:", data);
-
-      const result = await loginUser(email, password);
-      console.log("Login successful:", result);
-      navigate("/sport");
-    } catch (error) {
-      console.error("Login failed:", error.message);
-
-      setSnackbarData({
-        open: true,
-        message: error.message,
-        severity: "error",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <Background bgImage="/images/bg.png">
@@ -88,7 +59,7 @@ const Login = () => {
 
           <form
             className="flex w-[420px] max-600:w-[300px] flex-col items-start mt-[30px] mx-auto"
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={handleSubmit(handleLogin)}
           >
             <TextField
               label="Email address"

@@ -5,20 +5,14 @@ import Background from "../../components/ui/BackGround";
 import GradientButton from "../../components/ui/GradientButton";
 import TextField from "../../components/ui/TextField";
 import SocialAuth from "../../components/layouts/SocialAuth";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import registerSchema from "../../schemas/registerSchema";
-import { registerUser } from "../../api/auth";
 import Modal from "../../components/ui/Modal";
+import useRegister from "./hook/useRegister";
 
 const Register = () => {
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
-  const [snackbarData, setSnackbarData] = useState({
-    open: false,
-    message: "",
-    severity: "error",
-  });
+  const { handleRegister, loading, snackbarData, setSnackbarData } =
+    useRegister();
 
   useEffect(() => {
     document.title = "Register | Sporta AI";
@@ -31,36 +25,6 @@ const Register = () => {
   } = useForm({
     resolver: zodResolver(registerSchema),
   });
-
-  const onSubmit = async (data) => {
-    setLoading(true);
-    setSnackbarData({ open: false, message: "", severity: "error" });
-
-    try {
-      const { email, password, confirmPassword, fullName } = data;
-      const payload = {
-        full_name: fullName,
-        email,
-        password,
-        re_password: confirmPassword,
-      };
-      const result = await registerUser(payload);
-
-      console.log("Registration Successful:", result);
-      localStorage.setItem("registeredEmail", email);
-      navigate("/verify");
-    } catch (error) {
-      console.error("Registration Error:", error.message);
-
-      setSnackbarData({
-        open: true,
-        message: error.message,
-        severity: "error",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <Background bgImage="/images/bg.png">
@@ -76,7 +40,7 @@ const Register = () => {
 
           <form
             className="flex w-[480px] max-600:w-[300px] flex-col items-start mt-[30px] mx-auto"
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={handleSubmit(handleRegister)}
           >
             <TextField
               label="Full Name"

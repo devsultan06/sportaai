@@ -10,7 +10,7 @@ const Sport = () => {
 
 
     useEffect(() => {
-        document.title = "Login | Sporta AI";
+        document.title = "Sport | Sporta AI";
     }, []);
 
     const goRole = () => {
