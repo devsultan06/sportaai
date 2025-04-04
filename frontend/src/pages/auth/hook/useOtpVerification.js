@@ -19,7 +19,7 @@ const useOtpVerification = () => {
     if (!email) {
       const storedEmail = localStorage.getItem("verifiedEmail");
       if (storedEmail) {
-        navigate("/login"); 
+        navigate("/login");
       } else {
         navigate("/register");
       }

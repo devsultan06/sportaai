@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import Background from "../../components/ui/BackGround";
 import GradientButton from "../../components/ui/GradientButton";
 import Modal from "../../components/ui/Modal";
-import useOtpVerification from "./hook/useOtPVerification";
+import useOtpVerification from "./hook/useOtpVerification";
 
 const Verification = () => {
   const {
