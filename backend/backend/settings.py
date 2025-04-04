@@ -51,12 +51,52 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "djoser",
     "storages",
+    # Gauth apps 
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'rest_framework.authtoken',
+    'dj_rest_auth',
     # Local apps
     "main.apps.MainConfig",
 ]
 
+SITE_ID = 1
+
+# Email-only auth settings
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+
+# Google provider config
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': config("GOOGLE_CLIENT_ID"),
+            'secret': config("GOOGLE_CLIENT_SECRET"),
+            'key': ''
+        },
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
+# Custom adapters
+ACCOUNT_ADAPTER = 'main.adapters.CustomAccountAdapter'
+SOCIALACCOUNT_ADAPTER = 'main.adapters.CustomSocialAccountAdapter'
+
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
