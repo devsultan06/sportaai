@@ -13,6 +13,9 @@ const Modal = ({ open, onClose, severity = "error", message = "", bgColor }) => 
       autoHideDuration={5000}
       onClose={onClose}
       anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      style={{
+        width: "500px",
+      }}
     >
       <motion.div
         initial={{ y: 100, opacity: 0 }}
