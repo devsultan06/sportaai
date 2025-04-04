@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import loginSchema from "../../schemas/loginSchema";
 import { loginUser } from "../../api/auth";
+import Modal from "../../components/ui/Modal";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -16,6 +17,11 @@ const Login = () => {
   const [error, setError] = useState("");
   const storedEmail = localStorage.getItem("verifiedEmail") || "";
   const [email, setEmail] = useState(storedEmail);
+  const [snackbarData, setSnackbarData] = useState({
+    open: false,
+    message: "",
+    severity: "error",
+  });
   useEffect(() => {
     document.title = "Login | Sporta AI";
   }, []);
@@ -27,11 +33,10 @@ const Login = () => {
   } = useForm({
     resolver: zodResolver(loginSchema),
   });
-
   const onSubmit = async (data) => {
     try {
       setLoading(true);
-      setError("");
+      setSnackbarData({ open: false, message: "", severity: "error" });
 
       const { email, password } = data;
       console.log("Login Data:", data);
@@ -40,12 +45,18 @@ const Login = () => {
       console.log("Login successful:", result);
       navigate("/sport");
     } catch (error) {
-      console.error("Login failed:", error);
-      setError("Login failed. Please check your credentials.");
+      console.error("Login failed:", error.message);
+
+      setSnackbarData({
+        open: true,
+        message: error.message,
+        severity: "error",
+      });
     } finally {
       setLoading(false);
     }
   };
+
   return (
     <Background bgImage="/images/bg.png">
       <button
@@ -116,6 +127,13 @@ const Login = () => {
             </div>
           </form>
         </div>
+
+        <Modal
+          open={snackbarData.open}
+          onClose={() => setSnackbarData({ ...snackbarData, open: false })}
+          severity={snackbarData.severity}
+          message={snackbarData.message}
+        />
       </motion.div>
     </Background>
   );

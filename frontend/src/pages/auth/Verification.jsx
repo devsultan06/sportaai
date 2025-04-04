@@ -3,7 +3,8 @@ import { motion } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
 import Background from "../../components/ui/BackGround";
 import GradientButton from "../../components/ui/GradientButton";
-import { verifyOtp } from "../../api/auth";
+import { resendActivationCode, verifyOtp } from "../../api/auth";
+import Modal from "../../components/ui/Modal";
 
 const Verification = () => {
   const email = localStorage.getItem("registeredEmail");
@@ -11,7 +12,12 @@ const Verification = () => {
   const [otp, setOtp] = useState(["", "", "", ""]);
   const inputRefs = useRef([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [snackbarData, setSnackbarData] = useState({
+    open: false,
+    message: "",
+    severity: "error",
+  });
+  const [resendLoading, setResendLoading] = useState(false);
 
   useEffect(() => {
     if (!email) {
@@ -49,7 +55,7 @@ const Verification = () => {
     const enteredOtp = otp.join("");
     if (enteredOtp.length === 4) {
       setLoading(true);
-      setError("");
+      setSnackbarData({ open: false, message: "", severity: "error" });
 
       try {
         const result = await verifyOtp(email, enteredOtp);
@@ -59,12 +65,49 @@ const Verification = () => {
         navigate("/login");
       } catch (error) {
         console.error("Verification failed:", error);
-        setError("Verification failed. Please try again.");
+
+        setSnackbarData({
+          open: true,
+          message: error.message || "Verification failed",
+          severity: "error",
+        });
       } finally {
         setLoading(false);
       }
     }
   };
+
+  const handleResendCode = async () => {
+    if (!email) {
+      setSnackbarData({
+        open: true,
+        message: "Email not found. Please restart registration.",
+        severity: "error",
+      });
+      return;
+    }
+
+    setResendLoading(true);
+    setSnackbarData({ open: false, message: "", severity: "error" });
+
+    try {
+      const response = await resendActivationCode(email);
+      setSnackbarData({
+        open: true,
+        message: response.message,
+        severity: response.success ? "success" : "error",
+      });
+    } catch (error) {
+      setSnackbarData({
+        open: true,
+        message: error.message,
+        severity: "error",
+      });
+    } finally {
+      setResendLoading(false);
+    }
+  };
+
   return (
     <Background bgImage="/images/bg.png">
       <button
@@ -117,13 +160,13 @@ const Verification = () => {
 
           <p className="text-white opacity-70 text-center mx-auto text-[15px] my-[40px]">
             Didn't receive a code?
-            <Link
-              to="resend"
-              className="text-[#FFBB34] hover:underline cursor-pointer"
+            <button
+              onClick={handleResendCode}
+              disabled={resendLoading}
+              className="text-[#FFBB34] hover:underline ml-[5px] cursor-pointer disabled:opacity-50"
             >
-              {" "}
-              Resend{" "}
-            </Link>
+              {resendLoading ? "Resending..." : "Resend"}
+            </button>
           </p>
 
           <div className="mt-[20px] w-full">
@@ -134,6 +177,13 @@ const Verification = () => {
             />
           </div>
         </div>
+
+        <Modal
+          open={snackbarData.open}
+          onClose={() => setSnackbarData({ ...snackbarData, open: false })}
+          severity={snackbarData.severity}
+          message={snackbarData.message}
+        />
       </motion.div>
     </Background>
   );

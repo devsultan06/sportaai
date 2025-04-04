@@ -13,7 +13,6 @@ import Modal from "../../components/ui/Modal";
 
 const Register = () => {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   const navigate = useNavigate();
   const [snackbarData, setSnackbarData] = useState({
     open: false,
@@ -35,30 +34,27 @@ const Register = () => {
 
   const onSubmit = async (data) => {
     setLoading(true);
-    setError("");
     setSnackbarData({ open: false, message: "", severity: "error" });
 
     try {
-      const { email, password, confirmPassword } = data;
+      const { email, password, confirmPassword, fullName } = data;
       const payload = {
+        full_name: fullName,
         email,
         password,
         re_password: confirmPassword,
       };
       const result = await registerUser(payload);
+
       console.log("Registration Successful:", result);
       localStorage.setItem("registeredEmail", email);
       navigate("/verify");
     } catch (error) {
-      console.log(error);
-      console.error("Registration Error:", error.response?.data);
-      const errorMessage =
-        error.response?.data?.email?.[0] ||
-        "An error occurred during registration.";
-      setError(errorMessage);
+      console.error("Registration Error:", error.message);
+
       setSnackbarData({
         open: true,
-        message: errorMessage,
+        message: error.message,
         severity: "error",
       });
     } finally {
