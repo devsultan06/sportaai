@@ -24,6 +24,8 @@ from dj_rest_auth.registration.views import SocialLoginView
 import requests
 import json
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.exceptions import AuthenticationFailed, InvalidToken, TokenError
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 User = get_user_model()
 
@@ -44,8 +46,6 @@ class ActivateUserView(APIView):
             return Response({"message": "OTP verified. Account activated"}, status=status.HTTP_200_OK)
     
         return Response({"error": "Invalid or expired OTP"}, status=status.HTTP_400_BAD_REQUEST)
-
-
 
 
 # Endpoint to initiate Google OAuth
@@ -136,3 +136,22 @@ class GoogleCallbackView(APIView):
             'refresh_token': str(refresh),     # Refresh token as string
         }, status=200)
 
+
+# Views for handling login
+class SportaTokenObtainView(TokenObtainPairView):
+    def post(self, request, *args, **kwargs):
+        email_field = User.EMAIL_FIELD
+        email = request.data.get(email_field)
+        
+        try:
+            user = User.objects.get(email=email)
+            if not user.is_active:
+                return Response({"message": "Account is inactive. Please verify your email."}, status=status.HTTP_401_UNAUTHORIZED)
+        except User.DoesNotExist:
+            pass
+        
+        try: 
+            return super().post(request, *args, **kwargs)
+        except TokenError as e:
+            raise InvalidToken(e.args[0])
+        

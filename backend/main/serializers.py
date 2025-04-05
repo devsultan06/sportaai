@@ -7,6 +7,7 @@ from djoser.serializers import (
 )
 from .utils import verify_otp
 
+
 User = get_user_model()
 
 
@@ -28,16 +29,16 @@ class SportaUserCreateSerializer(UserCreateSerializer):
         style={"input_field": "password"},
         write_only=True,
     )
-    
+
     def validate(self, attrs):
         password = attrs["password"]
         re_password = attrs["re_password"]
-        
+
         if password != re_password:
             return serializers.ValidationError("Password do not match.")
-        
+
         return attrs
-        
+
     def create(self, validated_data):
         validated_data.pop("re_password")
         return super().create(validated_data)

@@ -268,12 +268,14 @@ DJOSER = {
         "users/set_email/",
         "token/login/",
         "token/logout/",
+        "jwt/create/",
     ],
     "SERIALIZERS": {
         "user_create": "main.serializers.SportaUserCreateSerializer",
         "user": "main.serializers.SportaUserSerializer",
         "current_user": "main.serializers.SportaUserSerializer",
         "password_reset_confirm": "main.serializers.SportaResetConfirm",
+        "jwt_create": "main.serializers.SportaTokenCreateSerializer",
     },
     "EMAIL": {
         "password_reset": "main.email.SportaPasswordResetEmail",
@@ -287,6 +289,8 @@ SIMPLE_JWT = {
     "ROTATE_REFRESH_TOKEN": True,
     "BLACKLIST_AFTER_ROTATION": True,
     "AUTH_BEARER_TYPES": ("Bearer",),
+    "USER_ID_CLAIM": "user_id",
+    "USER_AUTHENTICATION_RULE": "main.custom_authentication.custom_user_authentication_rule",
 }
 
 CACHES = {
