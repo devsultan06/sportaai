@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Verification</title>
+    <style>
+      @font-face {
+        font-family: "MyFont";
+        src: url(./Metropolis-Regular.otf);
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background-color: #121212;
+        margin: 0;
+        padding: 20px;
+        color: #fff;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        font-family: "MyFont", sans-serif;
+        overflow-y: visible;
+      }
+
+      div.emailBody {
+        width: 100%;
+        max-width: 500px;
+      }
+
+      div.header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 20px 0;
+        margin-bottom: 30px;
+      }
+
+      .logo {
+        margin-top: -20px;
+      }
+
+      div.socials {
+        display: flex;
+        gap: 15px;
+      }
+
+      div.main {
+        background-color: #2a2a2a;
+        padding: 40px 30px;
+        border-radius: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        color: var(--Basic-White, #fff);
+        opacity: 0.9;
+      }
+
+      p.your {
+        font-size: 20px;
+      }
+
+      p.verify {
+        font-size: 15px;
+        line-height: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #384860;
+      }
+
+      div.code-box {
+        text-align: center;
+        margin: 30px 0px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .box {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 2rem;
+      }
+
+      .code {
+        position: relative;
+        width: 70px;
+        height: 70px;
+        border-radius: 8px;
+        background-color: #1e1e1e;
+        color: #c9c7c7;
+        font-size: 1.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid transparent;
+        z-index: 0;
+      }
+
+      .code::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 1.4px;
+        background: linear-gradient(90deg, #ff256f, #ffbb34);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box,
+          linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        z-index: 1;
+        pointer-events: none;
+      }
+      span {
+        color: #ffbb34;
+      }
+
+      div.expires {
+        margin-bottom: 2rem;
+      }
+
+      div.expires p {
+        font-size: 13px;
+        margin-bottom: 10px;
+        line-height: 20px;
+      }
+
+      div.footer {
+        margin-top: 30px;
+        opacity: 0.8;
+        margin-bottom: 30px;
+      }
+
+      div.footer p {
+        font-size: 13px;
+        margin-bottom: 5px;
+        line-height: 20px;
+      }
+
+      div.address {
+        margin-top: 20px;
+        color: #b7b7b7;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="emailBody">
+      <div class="header">
+        <img src="./logonav.png" alt="" class="logo" />
+
+        <div class="socials">
+          <a href="https://www.facebook.com/sportaai/" target="_blank">
+            <img src="./facebook-box-line.png" alt="" />
+          </a>
+          <a href="https://www.instagram.com/sportaai/" target="_blank">
+            <img src="./instagram-line.png" alt="" />
+          </a>
+          <a href="https://www.linkedin.com/company/sportaai/" target="_blank">
+            <img src="./linkedin-box-line.png" alt="" />
+          </a>
+        </div>
+      </div>
+
+      <div class="main">
+        <p class="your">Your Sporta AI Verification Code</p>
+        <p class="verify">
+          To verify your identity and keep your Sporta AI experience secure,
+          please use the code below
+        </p>
+
+        <div class="code-box">
+          <p>Verification Code</p>
+          <div class="box">
+            <div class="code">6</div>
+            <div class="code">7</div>
+            <div class="code">4</div>
+            <div class="code">4</div>
+          </div>
+        </div>
+
+        <div class="expires">
+          <p>
+            Code expires in <span>5 minutes</span>. Do not share this code with
+            anyone.
+          </p>
+          <p>
+            If you didn’t request this, feel free to ignore this email — your
+            account is safe.
+          </p>
+          <p>Thanks for being part of the Sporta AI community</p>
+        </div>
+      </div>
+
+      <div class="footer">
+        <p>
+          You received this email because you signed up for Sporta AI. Don't
+          want to receive these emails? <span> Unsubscribe.</span>
+        </p>
+
+        <p>Didn’t sign up? <span>Contact Support</span></p>
+
+        <div class="address">
+          <p>Sporta AI, 123 Innovation Drive, San Francisco, CA 94107</p>
+          <p>© 2025 Sporta AI. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

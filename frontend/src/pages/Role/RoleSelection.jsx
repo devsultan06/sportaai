@@ -36,7 +36,7 @@ const RoleSelection = () => {
                             backgroundColor: role.border,
                             borderColor: role.border,
                         }}
-                        className={`w-[400px] py-3 text-white font-bold flex justify-center items-center gap-2 rounded-full border-2
+                        className={`w-[400px] max-860:w-[250px] py-3 text-white font-bold flex justify-center items-center gap-2 rounded-full border-2
                         relative transition-all duration-300 cursor-pointer ${selectedRole === role.id ? "scale-125 shadow-lg border-solid" : ""
                             }`}
                     >
