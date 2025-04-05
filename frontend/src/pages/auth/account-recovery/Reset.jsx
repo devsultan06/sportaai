@@ -34,6 +34,7 @@ const Reset = () => {
       const response = await requestPasswordReset(email);
       console.log("Password reset email sent:", response);
       localStorage.setItem("resetEmail", email);
+      localStorage.setItem("otpCountdownStartedReset", "true"); 
       navigate("/reset-password");
     } catch (err) {
       console.error("Error sending reset email:", err);

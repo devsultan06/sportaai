@@ -1,4 +1,4 @@
-import { Link,  useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import SocialAuth from "../../components/layouts/SocialAuth";
 import Background from "../../components/ui/BackGround";
@@ -14,7 +14,10 @@ import useLogin from "./hook/useLogin";
 const Login = () => {
   const { handleLogin, loading, snackbarData, setSnackbarData } = useLogin();
   const navigate = useNavigate();
-  const storedEmail = localStorage.getItem("verifiedEmail") || "";
+  const storedEmail =
+    localStorage.getItem("verifiedEmail") ||
+    localStorage.getItem("resetEmail") ||
+    "";
   const [email, setEmail] = useState(storedEmail);
   useEffect(() => {
     document.title = "Login | Sporta AI";
@@ -92,11 +95,10 @@ const Login = () => {
                 Forgot Password?
               </Link>
             </p>
-
-            <div className="flex justify-center w-full">
-              <SocialAuth type="login" />
-            </div>
           </form>
+          <div className="flex justify-center w-full">
+            <SocialAuth type="login" />
+          </div>
         </div>
 
         <Modal
