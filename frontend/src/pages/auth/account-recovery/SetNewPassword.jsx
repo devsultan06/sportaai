@@ -8,7 +8,11 @@ import { z } from "zod";
 import Background from "../../../components/ui/BackGround";
 import GradientButton from "../../../components/ui/GradientButton";
 import TextField from "../../../components/ui/TextField";
-import { resendActivationCode, resetPasswordConfirm } from "../../../api/auth";
+import {
+  requestPasswordReset,
+  resendActivationCode,
+  resetPasswordConfirm,
+} from "../../../api/auth";
 import Modal from "../../../components/ui/Modal";
 
 const schema = z
@@ -28,6 +32,7 @@ const SetNewPassword = () => {
   const [otp, setOtp] = useState(["", "", "", ""]);
   const inputRefs = useRef([]);
   const [loading, setLoading] = useState(false);
+  const [resendCountdown, setResendCountdown] = useState(300);
   const [snackbarData, setSnackbarData] = useState({
     open: false,
     message: "",
@@ -60,6 +65,24 @@ const SetNewPassword = () => {
       }
     }
   };
+
+  useEffect(() => {
+    let timer;
+    if (resendCountdown > 0) {
+      timer = setInterval(() => {
+        setResendCountdown((prev) => prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [resendCountdown]);
+
+  useEffect(() => {
+    const countdownStarted = localStorage.getItem("otpCountdownStartedReset");
+    if (countdownStarted === "true") {
+      setResendCountdown(300);
+      localStorage.removeItem("otpCountdownStartedReset");
+    }
+  }, []);
 
   const handleKeyDown = (index, e) => {
     if (e.key === "Backspace") {
@@ -130,7 +153,7 @@ const SetNewPassword = () => {
     setSnackbarData({ open: false, message: "", severity: "error" });
 
     try {
-      const response = await resendActivationCode(email);
+      const response = await requestPasswordReset(email);
       setSnackbarData({
         open: true,
         message: response.message,
@@ -199,10 +222,16 @@ const SetNewPassword = () => {
             Didn't receive a code?
             <button
               onClick={handleResendCode}
-              disabled={resendLoading}
+              disabled={resendCountdown > 0 || resendLoading}
               className="text-[#FFBB34] hover:underline ml-[5px] cursor-pointer disabled:opacity-50"
             >
-              {resendLoading ? "Resending..." : "Resend"}
+              {resendCountdown > 0
+                ? `Resend in ${Math.floor(resendCountdown / 60)}:${String(
+                    resendCountdown % 60
+                  ).padStart(2, "0")}`
+                : resendLoading
+                ? "Resending..."
+                : "Resend"}
             </button>
           </p>
 

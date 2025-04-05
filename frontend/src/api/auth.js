@@ -53,7 +53,7 @@ export const verifyOtp = async (email, otp) => {
 };
 export const loginUser = async (email, password) => {
   try {
-    const response = await fetch(`${BASE_URL}/jwt/create/`, {
+    const response = await fetch(`${BASE_URL}/login/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -64,14 +64,14 @@ export const loginUser = async (email, password) => {
     const result = await response.json();
 
     if (!response.ok) {
+      if (result.message === "Account is inactive. Please verify your email.") {
+        throw new Error(
+          "This account has not been verified. Redirecting to verify page and please check your email for otp."
+        );
+      }
       if (
         result.detail === "No active account found with the given credentials"
       ) {
-        throw new Error(
-          "This account has not been verified. Please check your email."
-        );
-      }
-      if (result.detail === "No active account found") {
         throw new Error("Invalid email or password. Please try again.");
       }
       throw new Error(result.message || "Login failed");

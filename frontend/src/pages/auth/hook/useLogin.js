@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginUser } from "../../../api/auth";
+import { loginUser, resendActivationCode } from "../../../api/auth";
 
 const useLogin = () => {
   const [loading, setLoading] = useState(false);
@@ -24,7 +24,20 @@ const useLogin = () => {
 
       navigate("/sport");
     } catch (error) {
+      const { email } = data;
+
       console.error("Login failed:", error.message);
+
+      if (
+        error.message ===
+        "This account has not been verified. Redirecting to verify page and please check your email for otp."
+      ) {
+        await resendActivationCode(email);
+
+        setTimeout(() => {
+          navigate("/verify");
+        }, 5000);
+      }
 
       setSnackbarData({
         open: true,

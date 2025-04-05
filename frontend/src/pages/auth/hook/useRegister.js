@@ -28,6 +28,7 @@ const useRegister = () => {
 
       console.log("Registration Successful:", result);
       localStorage.setItem("registeredEmail", email);
+      localStorage.setItem("otpCountdownStarted", "true"); // Start countdown
       navigate("/verify");
     } catch (error) {
       console.error("Registration Error:", error.message);

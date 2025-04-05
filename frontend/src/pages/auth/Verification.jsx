@@ -13,7 +13,8 @@ const Verification = () => {
     loading,
     resendLoading,
     snackbarData,
-    setSnackbarData,  
+    resendCountdown,
+    setSnackbarData,
     handleChange,
     handleKeyDown,
     handleSubmit,
@@ -80,10 +81,16 @@ const Verification = () => {
             Didn't receive a code?
             <button
               onClick={handleResendCode}
-              disabled={resendLoading}
+              disabled={resendCountdown > 0 || resendLoading}
               className="text-[#FFBB34] hover:underline ml-[5px] cursor-pointer disabled:opacity-50"
             >
-              {resendLoading ? "Resending..." : "Resend"}
+              {resendCountdown > 0
+                ? `Resend in ${Math.floor(resendCountdown / 60)}:${String(
+                    resendCountdown % 60
+                  ).padStart(2, "0")}`
+                : resendLoading
+                ? "Resending..."
+                : "Resend"}
             </button>
           </p>
 

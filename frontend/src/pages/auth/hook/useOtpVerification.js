@@ -9,6 +9,7 @@ const useOtpVerification = () => {
   const inputRefs = useRef([]);
   const [loading, setLoading] = useState(false);
   const [resendLoading, setResendLoading] = useState(false);
+  const [resendCountdown, setResendCountdown] = useState(300); // 5 mins
   const [snackbarData, setSnackbarData] = useState({
     open: false,
     message: "",
@@ -25,6 +26,24 @@ const useOtpVerification = () => {
       }
     }
   }, [navigate, email]);
+
+  useEffect(() => {
+    let timer;
+    if (resendCountdown > 0) {
+      timer = setInterval(() => {
+        setResendCountdown((prev) => prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [resendCountdown]);
+
+  useEffect(() => {
+    const countdownStarted = localStorage.getItem("otpCountdownStarted");
+    if (countdownStarted === "true") {
+      setResendCountdown(300);
+      localStorage.removeItem("otpCountdownStarted");
+    }
+  }, []);
 
   const handleChange = (index, value) => {
     if (value.match(/^[0-9]$/)) {
@@ -114,6 +133,7 @@ const useOtpVerification = () => {
     loading,
     resendLoading,
     snackbarData,
+    resendCountdown,
     setSnackbarData,
     handleChange,
     handleKeyDown,
