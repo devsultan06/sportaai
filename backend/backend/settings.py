@@ -289,8 +289,6 @@ SIMPLE_JWT = {
     "ROTATE_REFRESH_TOKEN": True,
     "BLACKLIST_AFTER_ROTATION": True,
     "AUTH_BEARER_TYPES": ("Bearer",),
-    "USER_ID_CLAIM": "user_id",
-    "USER_AUTHENTICATION_RULE": "main.custom_authentication.custom_user_authentication_rule",
 }
 
 CACHES = {
