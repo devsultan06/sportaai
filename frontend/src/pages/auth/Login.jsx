@@ -95,11 +95,10 @@ const Login = () => {
                 Forgot Password?
               </Link>
             </p>
-
-            <div className="flex justify-center w-full">
-              <SocialAuth type="login" />
-            </div>
           </form>
+          <div className="flex justify-center w-full">
+            <SocialAuth type="login" />
+          </div>
         </div>
 
         <Modal

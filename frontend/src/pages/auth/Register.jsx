@@ -26,6 +26,28 @@ const Register = () => {
     resolver: zodResolver(registerSchema),
   });
 
+  // const openGooglePopup = () => {
+  //   const width = 500;
+  //   const height = 600;
+  //   const left = window.innerWidth / 2 - width / 2;
+  //   const top = window.innerHeight / 2 - height / 2;
+
+  //   const popup = window.open(
+  //     "https://sportaai.onrender.com/api/auth/google/login/", // your backend's /login
+  //     "GoogleSignIn",
+  //     `width=${width},height=${height},top=${top},left=${left}`
+  //   );
+
+  //   // Polling the popup window to see when it closes
+  //   const popupInterval = setInterval(() => {
+  //     if (popup?.closed) {
+  //       clearInterval(popupInterval);
+  //       // When closed, route to sport page or refetch auth state
+  //       window.location.href = "/sport"; // or use navigate("/sport") if using React Router
+  //     }
+  //   }, 500);
+  // };
+
   return (
     <Background bgImage="/images/bg.png">
       <motion.div
@@ -83,11 +105,11 @@ const Register = () => {
                 loading={loading}
               />
             </div>
-
-            <div className="flex justify-center w-full">
-              <SocialAuth type="signup" />
-            </div>
           </form>
+
+          <div className="flex justify-center w-full">
+            <SocialAuth type="signup" handleGooglePopup={openGooglePopup} />
+          </div>
         </div>
       </motion.div>
 
