@@ -68,7 +68,7 @@ const Reset = () => {
           <h1 className="text-white text-[30px] font-bold mb-[5px]">
             Forgot Password?
           </h1>
-          <p className="w-[450px] text-center mx-auto opacity-80 shadow-md">
+          <p className="w-[450px] max-860:w-[350px] text-center mx-auto opacity-80 shadow-md">
             Enter your registered email address, and we'll send you a one-time
             password (OTP) to verify your identity.
           </p>

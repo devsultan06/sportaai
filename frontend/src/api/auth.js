@@ -14,7 +14,10 @@ export const registerUser = async (userData) => {
 
     if (!response.ok) {
       const errorMessage =
-        result.email?.[0] || result.message || "Registration failed";
+        result.password?.[0] ||
+        result.email?.[0] ||
+        result.message ||
+        "Registration failed";
       throw new Error(errorMessage);
     }
 
