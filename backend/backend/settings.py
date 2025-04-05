@@ -66,11 +66,11 @@ INSTALLED_APPS = [
 SITE_ID = 1
 
 # Email-only auth settings
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_UNIQUE_EMAIL = True
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_SIGNUP_FIELDS = ['email*', "full_name*", 'password*', 're_password2*']
+ACCOUNT_LOGIN_METHODS = {'email'}
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_UNIQUE_EMAIL = True
+
 
 # Google provider config
 SOCIALACCOUNT_PROVIDERS = {
