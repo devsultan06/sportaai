@@ -66,7 +66,7 @@ export const loginUser = async (email, password) => {
     if (!response.ok) {
       if (result.message === "Account is inactive. Please verify your email.") {
         throw new Error(
-          "This account has not been verified. Redirecting to verify page and please check your email for otp."
+          "Account not verified. Redirecting to verification page — please check your email for the code."
         );
       }
       if (

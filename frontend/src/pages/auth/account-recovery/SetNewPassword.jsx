@@ -8,11 +8,7 @@ import { z } from "zod";
 import Background from "../../../components/ui/BackGround";
 import GradientButton from "../../../components/ui/GradientButton";
 import TextField from "../../../components/ui/TextField";
-import {
-  requestPasswordReset,
-  resendActivationCode,
-  resetPasswordConfirm,
-} from "../../../api/auth";
+import { requestPasswordReset, resetPasswordConfirm } from "../../../api/auth";
 import Modal from "../../../components/ui/Modal";
 
 const schema = z
@@ -32,7 +28,7 @@ const SetNewPassword = () => {
   const [otp, setOtp] = useState(["", "", "", ""]);
   const inputRefs = useRef([]);
   const [loading, setLoading] = useState(false);
-  const [resendCountdown, setResendCountdown] = useState(300);
+  const [resendCountdown, setResendCountdown] = useState(60);
   const [snackbarData, setSnackbarData] = useState({
     open: false,
     message: "",
@@ -79,7 +75,7 @@ const SetNewPassword = () => {
   useEffect(() => {
     const countdownStarted = localStorage.getItem("otpCountdownStartedReset");
     if (countdownStarted === "true") {
-      setResendCountdown(300);
+      setResendCountdown(60);
       localStorage.removeItem("otpCountdownStartedReset");
     }
   }, []);
@@ -157,8 +153,9 @@ const SetNewPassword = () => {
       setSnackbarData({
         open: true,
         message: response.message,
-        severity: response.success ? "success" : "error",
+        severity: "success",
       });
+      setResendCountdown(60);
     } catch (error) {
       setSnackbarData({
         open: true,
@@ -223,7 +220,7 @@ const SetNewPassword = () => {
             <button
               onClick={handleResendCode}
               disabled={resendCountdown > 0 || resendLoading}
-              className="text-[#FFBB34] hover:underline ml-[5px] cursor-pointer disabled:opacity-50"
+              className="text-[#FFBB34] hover:underline ml-[5px] cursor-pointer disabled:no-underline disabled:opacity-50 disabled:cursor-default"
             >
               {resendCountdown > 0
                 ? `Resend in ${Math.floor(resendCountdown / 60)}:${String(

@@ -30,7 +30,7 @@ const useLogin = () => {
 
       if (
         error.message ===
-        "This account has not been verified. Redirecting to verify page and please check your email for otp."
+        "Account not verified. Redirecting to verification page — please check your email for the code."
       ) {
         await resendActivationCode(email);
 

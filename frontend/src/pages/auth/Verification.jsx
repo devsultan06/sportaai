@@ -76,20 +76,17 @@ const Verification = () => {
               />
             ))}
           </div>
-
           <p className="text-white opacity-70 text-center mx-auto text-[15px] my-[40px]">
             Didn't receive a code?
             <button
               onClick={handleResendCode}
               disabled={resendCountdown > 0 || resendLoading}
-              className="text-[#FFBB34] hover:underline ml-[5px] cursor-pointer disabled:opacity-50"
+              className="text-[#FFBB34] hover:underline ml-[5px] cursor-pointer disabled:no-underline disabled:opacity-50 disabled:cursor-default"
             >
-              {resendCountdown > 0
-                ? `Resend in ${Math.floor(resendCountdown / 60)}:${String(
-                    resendCountdown % 60
-                  ).padStart(2, "0")}`
-                : resendLoading
+              {resendLoading
                 ? "Resending..."
+                : resendCountdown > 0
+                ? `Resend in 0:${String(resendCountdown).padStart(2, "0")}`
                 : "Resend"}
             </button>
           </p>

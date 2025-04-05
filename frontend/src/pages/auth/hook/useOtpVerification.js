@@ -9,7 +9,7 @@ const useOtpVerification = () => {
   const inputRefs = useRef([]);
   const [loading, setLoading] = useState(false);
   const [resendLoading, setResendLoading] = useState(false);
-  const [resendCountdown, setResendCountdown] = useState(300); // 5 mins
+  const [resendCountdown, setResendCountdown] = useState(60);
   const [snackbarData, setSnackbarData] = useState({
     open: false,
     message: "",
@@ -40,7 +40,7 @@ const useOtpVerification = () => {
   useEffect(() => {
     const countdownStarted = localStorage.getItem("otpCountdownStarted");
     if (countdownStarted === "true") {
-      setResendCountdown(300);
+      setResendCountdown(60);
       localStorage.removeItem("otpCountdownStarted");
     }
   }, []);
@@ -110,6 +110,7 @@ const useOtpVerification = () => {
 
     try {
       const response = await resendActivationCode(email);
+      setResendCountdown(60);
       setSnackbarData({
         open: true,
         message: response.message,
