@@ -148,7 +148,8 @@ else:
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "main.authentication.SportaCookieAuthentication",
+        # "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
 }
 
@@ -268,7 +269,6 @@ DJOSER = {
         "users/set_email/",
         "token/login/",
         "token/logout/",
-        "jwt/create/",
     ],
     "SERIALIZERS": {
         "user_create": "main.serializers.SportaUserCreateSerializer",

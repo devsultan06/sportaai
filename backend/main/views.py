@@ -9,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 from django.contrib.auth import get_user_model
-from .utils import create_otp, verify_otp, send_email
+from .utils import verify_otp, set_cookie
 from djoser.views import UserViewSet
 from django.core.mail import send_mail
 from rest_framework.generics import ListCreateAPIView
@@ -30,17 +30,6 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenBlacklistVi
 from rest_framework_simplejwt.serializers import TokenRefreshSerializer
 
 User = get_user_model()
-
-
-def set_cookie(response, key, value):
-    secure_flag = not settings.DEBUG
-    response.set_cookie(
-        key=key,
-        value=value,
-        httponly=True,
-        secure=secure_flag,
-        samesite="Lax",
-    )
 
 
 class ActivateUserView(APIView):
@@ -68,7 +57,7 @@ class ActivateUserView(APIView):
 
         return Response(
             {"error": "Invalid or expired OTP"}, status=status.HTTP_400_BAD_REQUEST
-        )
+        )        
 
 
 # Endpoint to initiate Google OAuth
