@@ -17,11 +17,10 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from main.views import ActivateUserView
+from main.views import ActivateUserView, SportaTokenObtainView, SportaTokenRefreshView, SportaLogoutView
+from rest_framework_simplejwt.views import TokenBlacklistView
 from django.conf import settings
 from django.conf.urls.static import static
-
-
 
 
 urlpatterns = [
@@ -29,8 +28,19 @@ urlpatterns = [
     path("api/", include("main.urls")),
     path("api/auth/", include("djoser.urls")),
     path("api/auth/", include("djoser.urls.jwt")),
-    path("api/auth/activate-user/", ActivateUserView.as_view(), name="activate-user")
-    
+    path("api/auth/activate-user/", ActivateUserView.as_view(), name="activate-user"),
 ]
+
+#customized endpoint for authentication
+urlpatterns += [
+    path(
+        "api/auth/login/",
+        SportaTokenObtainView.as_view(),
+        name="jwt_create",
+    ),
+    path("api/auth/logout/", SportaLogoutView.as_view(), name="logout"),
+    path("api/auth/refresh/", SportaTokenRefreshView.as_view())
+]
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
