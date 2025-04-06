@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 
 # from .schemas import AthleteSchema
 # from .models import SportaUser
@@ -141,16 +141,39 @@ class GoogleCallbackView(APIView):
         access_token["full_name"] = user.full_name
 
         # Return the tokens to the frontend
-        response = Response(
-            {
-                "email": user.email,
-                "full_name": user.full_name,
-            },
-            status=200,
-        )
+        response = HttpResponse(f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <script>
+                window.onload = function () {{
+                    const authData = {{
+                        email: "{user.email}",
+                        full_name: "{user.full_name}"
+                    }};
+                    
+                    try {{
+                        localStorage.setItem("google-auth-data", JSON.stringify(authData));
+                    }} catch (e) {{
+                        console.error("LocalStorage write failed:", e);
+                    }}
+
+                    window.close();
+                }};
+            </script>
+        </head>
+        <body>
+            Authentication complete. Closing this window...
+        </body>
+        </html>
+        """)
+
+
+
+        # Set HttpOnly cookies (secure!)
         set_cookie(response, "access_token", access_token)
         set_cookie(response, "refresh_token", refresh)
-        
+
         return response
 
 
