@@ -26,3 +26,11 @@ def set_cookie(response, key, value):
         secure=secure_flag,
         samesite="Lax",
     )
+
+
+# To rename the avatar file name
+def rename_avatar(instance, file_name):
+    extension = os.path.splitext(file_name)[1]
+    user_id = instance.id
+    new_filename = f"user_{user_id}{extension}"
+    return os.path.join("profile_pictures", new_filename)
