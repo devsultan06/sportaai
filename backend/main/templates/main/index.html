@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Verification</title>
     <style>
-      /* Minimal CSS for email client compatibility */
+      /* Base styles */
       .code {
         width: 70px;
         height: 70px;
@@ -17,7 +17,7 @@
         border-radius: 8px;
         border: 1px solid #ffbb34; /* Fallback border */
         background: linear-gradient(90deg, #ff256f, #ffbb34); /* Gradient for supporting clients */
-        background-clip: padding-box; /* Ensure gradient is applied correctly */
+        background-clip: padding-box;
         -webkit-background-clip: padding-box;
         position: relative;
       }
@@ -27,27 +27,52 @@
         border-radius: 6px;
         line-height: 70px;
       }
+
+      /* Media query for mobile devices */
+      @media only screen and (max-width: 600px) {
+        body {
+          padding: 10px !important; /* Reduce padding on mobile */
+        }
+        .email-container {
+          max-width: 100% !important; /* Use full width on mobile */
+          width: 100% !important;
+        }
+        .main-content {
+          padding: 20px !important; /* Reduce padding inside the main section */
+        }
+        .code {
+          width: 50px !important; /* Smaller boxes on mobile */
+          height: 50px !important;
+          font-size: 20px !important;
+        }
+        .code span {
+          line-height: 50px !important; /* Adjust line height for smaller boxes */
+        }
+        .code-table {
+          cellspacing: 5 !important; /* Reduce spacing between boxes */
+        }
+      }
     </style>
   </head>
   <body style="background-color: #121212; margin: 0; padding: 20px; color: #fff; font-family: Arial, Helvetica, sans-serif;">
-    <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 500px; margin: 0 auto;">
+    <table width="100%" cellpadding="0" cellspacing="0" class="email-container" style="max-width: 500px; margin: 0 auto;">
       <!-- Header -->
       <tr>
         <td style="padding: 20px 0;">
           <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
               <td>
-                <img src="https://yourdomain.com/logonav.png" alt="Sporta AI Logo" style="display: block;" />
+                <img src="https://res.cloudinary.com/dpyxbvcyl/image/upload/v1744023338/SportaAI%20static/logo.png" alt="Sporta AI Logo" style="display: block;" />
               </td>
               <td align="right">
                 <a href="https://www.facebook.com/sportaai/" target="_blank">
-                  <img src="https://yourdomain.com/facebook-box-line.png" alt="Facebook" style="display: inline-block; margin-left: 10px;" />
+                  <img src="https://res.cloudinary.com/dpyxbvcyl/image/upload/v1744023337/SportaAI%20static/facebook.png" alt="Facebook" style="display: inline-block; margin-left: 10px;" />
                 </a>
                 <a href="https://www.instagram.com/sportaai/" target="_blank">
-                  <img src="https://yourdomain.com/instagram-line.png" alt="Instagram" style="display: inline-block; margin-left: 10px;" />
+                  <img src="https://res.cloudinary.com/dpyxbvcyl/image/upload/v1744023338/SportaAI%20static/instagram.png" alt="Instagram" style="display: inline-block; margin-left: 10px;" />
                 </a>
                 <a href="https://www.linkedin.com/company/sportaai/" target="_blank">
-                  <img src="https://yourdomain.com/linkedin-box-line.png" alt="LinkedIn" style="display: inline-block; margin-left: 10px;" />
+                  <img src="https://res.cloudinary.com/dpyxbvcyl/image/upload/v1744023338/SportaAI%20static/linkedin.png" alt="LinkedIn" style="display: inline-block; margin-left: 10px;" />
                 </a>
               </td>
             </tr>
@@ -57,7 +82,7 @@
 
       <!-- Main Section -->
       <tr>
-        <td style="background-color: #2a2a2a; padding: 40px 30px; border-radius: 15px; color: #fff;">
+        <td class="main-content" style="background-color: #2a2a2a; padding: 40px 30px; border-radius: 15px; color: #fff;">
           <p style="font-size: 20px; margin-bottom: 10px;">Your Sporta AI Verification Code</p>
           <p style="font-size: 15px; line-height: 20px; padding-bottom: 20px; border-bottom: 1px solid #384860;">
             To verify your identity and keep your Sporta AI experience secure, please use the code below
@@ -65,7 +90,7 @@
 
           <div style="text-align: center; margin: 30px 0;">
             <p style="font-size: 15px; margin-bottom: 20px;">Verification Code</p>
-            <table cellpadding="0" cellspacing="10" style="margin: 0 auto;">
+            <table cellpadding="0" cellspacing="10" class="code-table" style="margin: 0 auto;">
               <tr>
                 {% for digit in otp %}
                   <td class="code">
