@@ -34,6 +34,8 @@ if DEBUG:
 else:
     ALLOWED_HOSTS = ["sportaai.onrender.com"]
 
+ALLOWED_HOSTS = ["sportaai.onrender.com", "localhost", "127.0.0.1"]
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -111,7 +113,7 @@ ROOT_URLCONF = "backend.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR, 'main/templates')],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -148,7 +150,8 @@ else:
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "main.authentication.SportaCookieAuthentication",
+        # "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
 }
 
@@ -268,7 +271,6 @@ DJOSER = {
         "users/set_email/",
         "token/login/",
         "token/logout/",
-        "jwt/create/",
     ],
     "SERIALIZERS": {
         "user_create": "main.serializers.SportaUserCreateSerializer",

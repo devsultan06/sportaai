@@ -1,50 +1,312 @@
 import os
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
-
-# To rename the avatar file name
-def rename_avatar(instance, file_name):
-    extension = os.path.splitext(file_name)[1]
-    user_id = instance.id
-    new_filename = f"user_{user_id}{extension}"
-    return os.path.join("profile_pictures", new_filename)
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericForeignKey
+from .utils import rename_avatar
 
 
 class SportaUserManager(BaseUserManager):
     def create_user(self, email, password, **extra_fields):
         if not email:
             raise ValueError("User must have an email address")
-        
+
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
-        user.save(using=self.db)
+        user.save(using=self._db)
         return user
-    
+
     def create_superuser(self, email, password, **extra_fields):
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
-        
+
         return self.create_user(email, password, **extra_fields)
+
 
 # A custom user model
 class SportaUser(AbstractUser):
-    ROLES_CHOICES = [("athlete", "Athlete"),
-                     ("coach", "Coach"),
-                     ("analyst", "Analyst"),
-                     ]
+    ROLES_CHOICES = [
+        ("athlete", "Athlete"),
+        ("coach", "Coach"),
+        ("analyst", "Analyst"),
+    ]
 
     username = None
-    email = models.EmailField(unique = True)
+    email = models.EmailField(unique=True)
     first_name = None
-    last_name =None
+    last_name = None
     full_name = models.CharField(max_length=350)
     avatar = models.ImageField(upload_to=rename_avatar, blank=True)
     role = models.CharField(max_length=10, choices=ROLES_CHOICES, blank=True)
     sport = models.CharField(max_length=100, blank=True)
-    
+
     objects = SportaUserManager()
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
-# Note: I removed the Athlete model because the User model I created already differentiates users by their roles. This keeps things simpler and avoids redundancy. Feel free to delete this note once you've seen it.
+
+
+class Team(models.Model):
+    name = models.CharField(max_length=30)
+    year_founded = models.IntegerField()
+    logo = models.ImageField(upload_to="Team/", blank=True)
+    home_stadium = models.CharField(max_length=30)
+    formation = models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.name
+
+
+class AthleteProfile(models.Model):
+    user = models.ForeignKey(SportaUser, on_delete=models.CASCADE)
+    age = models.IntegerField()
+    height = models.FloatField()
+    weight = models.FloatField()
+    nickname = models.CharField(max_length=30, blank=True)
+    position = models.CharField(max_length=10)
+    team = models.ForeignKey(
+        Team,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
+    jersey_no = models.IntegerField()
+    nationality = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.user.full_name
+
+    class Meta:
+        default_related_name = "athletes"
+
+
+class CoachProfile(models.Model):
+    user = models.ForeignKey(SportaUser, on_delete=models.CASCADE)
+    age = models.IntegerField()
+    years_of_experience = models.IntegerField()
+    coaching_style = models.CharField(max_length=30)
+    team = models.ForeignKey(
+        Team,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
+
+    def __str__(self):
+        return self.user.full_name
+
+    class Meta:
+        default_related_name = "coach"
+
+
+class AnalystProfile(models.Model):
+    user = models.ForeignKey(SportaUser, on_delete=models.CASCADE)
+    age = models.IntegerField()
+    years_of_experience = models.IntegerField()
+    specialization = models.CharField(blank=True, max_length=50)
+
+
+class Match(models.Model):
+    MATCH_STATUS_CHOICES = choices = [
+        ("live", "Live"),
+        ("finished", "Finished"),
+        ("upcoming", "Upcoming"),
+    ]
+    home_team = models.ForeignKey(
+        Team,
+        on_delete=models.CASCADE,
+        related_name="home_matches",
+    )
+    away_team = models.ForeignKey(
+        Team,
+        on_delete=models.CASCADE,
+        related_name="away_matches",
+    )
+    home_team_score = models.IntegerField()
+    away_team_score = models.IntegerField()
+    status = models.CharField(max_length=20, choices=MATCH_STATUS_CHOICES)
+    match_type = models.CharField(max_length=30)
+    stadium = models.CharField(max_length=30)
+    date = models.DateTimeField()
+
+    def __str__(self):
+        return f"{self.home_team.name} vs {self.away_team.name}"
+
+
+class Timestamp(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        abstract = True
+
+
+class AthleteMatch(Timestamp):
+    athlete = models.ForeignKey(AthleteProfile, on_delete=models.CASCADE)
+    match = models.ForeignKey(Match, on_delete=models.CASCADE)
+
+    class Meta:
+        abstract = True
+        unique_together = ("athlete", "match")
+
+
+class MatchPerformance(AthleteMatch):
+    pass
+    # pass accuracy will be calculated on the flow with Pass
+
+
+class PerformanceRecord(AthleteMatch):
+    metric_type = models.CharField(max_length=30)  # e.g Speed, distance_covered e.t.c
+    value = models.FloatField()
+    performance_record = models.ForeignKey(MatchPerformance, on_delete=models.CASCADE)
+
+    def __str__(self):
+        detail = f"{self.athlete.user.full_name} {self.metric_type} in {self.match.home_team} vs {self.match.away_team}"
+        return detail
+
+    class Meta:
+        default_related_name = "performances"
+
+
+class Pass(AthleteMatch):
+    is_completed = models.BooleanField()
+
+    def __str__(self):
+        return f"{self.athlete.user.full_name} made a pass"
+
+    class Meta:
+        default_related_name = "passes"
+
+
+class Card(AthleteMatch):
+    CARD_TYPE = [("yellow", "Yellow card"), ("red", "Red card")]
+    card_type = models.CharField(max_length=20, choices=CARD_TYPE)
+    match = models.ForeignKey(MatchPerformance, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.athlete.user.full_name} {self.card_type} card"
+
+    class Meta:
+        default_related_name = "cards"
+
+
+class Injury(AthleteMatch):
+    SEVERITY_CHOICES = [
+        ("low", "Low"),
+        ("medium", "Medium"),
+        ("high", "High"),
+    ]
+    description = models.TextField()
+    severity = models.CharField(max_length=20, choices=SEVERITY_CHOICES)
+    recovery_time = models.IntegerField(null=True, blank=True)  # In days
+
+    def __str__(self):
+        return f"{self.athlete.user.full_name} injury"
+
+    class Meta:
+        default_related_name = "injuries"
+
+
+class Insight(AthleteMatch):
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    insight_type = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        default_related_name = "insights"
+
+
+class TrainingSession(Timestamp):
+    PERIOD_CHOICES = [
+        ("daily", "daily"),
+        ("weekly", "weekly"),
+        ("monthly", "monthly"),
+    ]
+    INTENSITY_CHOICES = [("high", "High"), ("mid", "Medium"), ("low", "Low")]
+    athlete = models.ForeignKey(
+        AthleteProfile,
+        on_delete=models.CASCADE,
+        related_name="training_sessions",
+    )
+    activity = models.CharField(max_length=150)
+    period = models.CharField(max_length=20, choices=PERIOD_CHOICES)
+    duration = models.TimeField()
+    intensity = models.CharField(max_length=10, choices=INTENSITY_CHOICES)
+
+    def __str__(self):
+        return f"{self.activity} for {self.athlete.user.full_name}"
+
+
+class Device(models.Model):
+    user = models.ForeignKey(
+        AthleteProfile,
+        on_delete=models.CASCADE,
+        related_name="devices",
+    )
+    name = models.CharField(max_length=50)
+    is_active = models.BooleanField(default=False)
+    last_sync = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        unique_together = ("user", "name")
+
+
+class ChatSession(models.Model):
+    user = models.ForeignKey(
+        SportaUser,
+        on_delete=models.CASCADE,
+        related_name="chat_sessions",
+    )
+    start_time = models.DateTimeField(auto_now_add=True)
+    end_time = models.DateTimeField(null=True, blank=True)
+    topic = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.topic
+
+
+class Message(Timestamp):
+    sender = models.ForeignKey(
+        SportaUser,
+        on_delete=models.CASCADE,
+        related_name="messages",
+    )
+    chat_session = models.ForeignKey(
+        ChatSession,
+        on_delete=models.CASCADE,
+        related_name="messages",
+    )
+    text = models.TextField()
+
+    def __str__(self):
+        return f"message from {self.sender.full_name}"
+
+class Alert(Timestamp):
+    CATEGORIES = [
+        ("injury_risk", "Injury Risk"),
+        ("system_update", "System Update"),
+        ("performance_trend", "Performance Trend"),
+    ]
+    message = models.TextField()
+    category = models.CharField(max_length=20, choices=CATEGORIES)
+
+    def __str__(self):
+        return self.message
+    
+class AlertInteraction(Timestamp):
+    alert = models.ForeignKey(
+        Alert,
+        models.CASCADE,
+        related_name="interacitons",
+    )
+    user = models.ForeignKey(SportaUser, models.CASCADE)
+    is_read = models.BooleanField(default=False)
+    
+    def __str__(self):
+        return f"{self.user.full_name} - {self.alert.message}"

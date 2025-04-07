@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 
 # from .schemas import AthleteSchema
 # from .models import SportaUser
@@ -9,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 from django.contrib.auth import get_user_model
-from .utils import create_otp, verify_otp, send_email
+from .utils import verify_otp, set_cookie
 from djoser.views import UserViewSet
 from django.core.mail import send_mail
 from rest_framework.generics import ListCreateAPIView
@@ -30,17 +30,6 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenBlacklistVi
 from rest_framework_simplejwt.serializers import TokenRefreshSerializer
 
 User = get_user_model()
-
-
-def set_cookie(response, key, value):
-    secure_flag = not settings.DEBUG
-    response.set_cookie(
-        key=key,
-        value=value,
-        httponly=True,
-        secure=secure_flag,
-        samesite="Lax",
-    )
 
 
 class ActivateUserView(APIView):
@@ -68,7 +57,7 @@ class ActivateUserView(APIView):
 
         return Response(
             {"error": "Invalid or expired OTP"}, status=status.HTTP_400_BAD_REQUEST
-        )
+        )        
 
 
 # Endpoint to initiate Google OAuth
@@ -152,16 +141,39 @@ class GoogleCallbackView(APIView):
         access_token["full_name"] = user.full_name
 
         # Return the tokens to the frontend
-        response = Response(
-            {
-                "email": user.email,
-                "full_name": user.full_name,
-            },
-            status=200,
-        )
+        response = HttpResponse(f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <script>
+                window.onload = function () {{
+                    const authData = {{
+                        email: "{user.email}",
+                        full_name: "{user.full_name}"
+                    }};
+                    
+                    try {{
+                        localStorage.setItem("google-auth-data", JSON.stringify(authData));
+                    }} catch (e) {{
+                        console.error("LocalStorage write failed:", e);
+                    }}
+
+                    window.close();
+                }};
+            </script>
+        </head>
+        <body>
+            Authentication complete. Closing this window...
+        </body>
+        </html>
+        """)
+
+
+
+        # Set HttpOnly cookies (secure!)
         set_cookie(response, "access_token", access_token)
         set_cookie(response, "refresh_token", refresh)
-        
+
         return response
 
 

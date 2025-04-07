@@ -16,26 +16,21 @@ def verify_otp(email, typed_otp):
         return True
     return False
 
-import os
-import requests
 
-
-def send_email(to_email, subject, message):
-    response = requests.post(
-        "https://api.resend.com/emails",
-        headers={
-            "Authorization": f"Bearer {settings.RESEND_API_KEY}",
-            "content-type": "application/json"
-            },
-        json={
-            "from": settings.DEFAULT_FROM_EMAIL,
-            "to": [to_email],
-            "subject": subject,
-            "text": message,
-        },
+def set_cookie(response, key, value):
+    secure_flag = not settings.DEBUG
+    response.set_cookie(
+        key=key,
+        value=value,
+        httponly=True,
+        secure=secure_flag,
+        samesite="Lax",
     )
 
-    if response.status_code != 200:
-        print("Resend error:", response.json())
 
-    return response.json()
+# To rename the avatar file name
+def rename_avatar(instance, file_name):
+    extension = os.path.splitext(file_name)[1]
+    user_id = instance.id
+    new_filename = f"user_{user_id}{extension}"
+    return os.path.join("profile_pictures", new_filename)
