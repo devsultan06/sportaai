@@ -229,7 +229,7 @@ class TrainingSession(Timestamp):
     athlete = models.ForeignKey(
         AthleteProfile,
         on_delete=models.CASCADE,
-        related_name="training_sessions ",
+        related_name="training_sessions",
     )
     activity = models.CharField(max_length=150)
     period = models.CharField(max_length=20, choices=PERIOD_CHOICES)
