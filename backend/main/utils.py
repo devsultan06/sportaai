@@ -1,6 +1,8 @@
+import os
 from django.core.cache import cache
 import random
 from django.conf import settings
+
 
 
 def create_otp(email):

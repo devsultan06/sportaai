@@ -10,8 +10,6 @@ from rest_framework.views import APIView
 from rest_framework import status
 from django.contrib.auth import get_user_model
 from .utils import verify_otp, set_cookie
-from djoser.views import UserViewSet
-from django.core.mail import send_mail
 from rest_framework.generics import ListCreateAPIView
 
 from django.shortcuts import redirect
@@ -23,10 +21,9 @@ from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from dj_rest_auth.registration.views import SocialLoginView
 import requests
-import json
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenBlacklistView
+from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.serializers import TokenRefreshSerializer
 
 User = get_user_model()
@@ -77,9 +74,6 @@ class GoogleLoginRedirectView(APIView):
             "access_type": "online",
             "state": request.GET.get("next", "/"),  # Where to redirect after auth
         }
-
-        print(redirect_uri)
-        print(params)
 
         auth_url = f"{google_auth_url}?{'&'.join([f'{key}={value}' for key, value in params.items()])}"
         return redirect(auth_url)
