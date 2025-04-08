@@ -1,7 +1,6 @@
 /.venv
 /venv
 .env
-backend/db.sqlite3
 backend/main/__pycache__/
 *.pyc
-/db.sqlite3
+/backend/db.sqlite3
