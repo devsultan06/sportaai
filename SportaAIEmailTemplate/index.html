@@ -176,10 +176,9 @@
         <div class="code-box">
           <p>Verification Code</p>
           <div class="box">
-            <div class="code">6</div>
-            <div class="code">7</div>
-            <div class="code">4</div>
-            <div class="code">4</div>
+            {% for digit in otp %}
+            <div class="code">{{ digit }}</div>
+            {% endfor %}
           </div>
         </div>
 
