@@ -1,8 +1,8 @@
 import os
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes.fields import GenericForeignKey
+# from django.contrib.contenttypes.models import ContentType
+# from django.contrib.contenttypes.fields import GenericForeignKey
 from .utils import rename_avatar
 
 
@@ -59,7 +59,7 @@ class Team(models.Model):
 
 
 class AthleteProfile(models.Model):
-    user = models.ForeignKey(SportaUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(SportaUser, on_delete=models.CASCADE, related_name="athlete")
     age = models.IntegerField()
     height = models.FloatField()
     weight = models.FloatField()
@@ -76,9 +76,6 @@ class AthleteProfile(models.Model):
 
     def __str__(self):
         return self.user.full_name
-
-    class Meta:
-        default_related_name = "athletes"
 
 
 class CoachProfile(models.Model):
@@ -105,6 +102,9 @@ class AnalystProfile(models.Model):
     age = models.IntegerField()
     years_of_experience = models.IntegerField()
     specialization = models.CharField(blank=True, max_length=50)
+    
+    def __str__(self):
+        return self.user.full_name
 
 
 class Match(models.Model):
