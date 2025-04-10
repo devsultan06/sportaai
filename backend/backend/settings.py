@@ -15,6 +15,7 @@ from pathlib import Path
 from datetime import timedelta
 from decouple import config
 from urllib.parse import urlparse
+from cloudinary import uploader, api
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -53,6 +54,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "djoser",
     "storages",
+    "cloudinary_storage",
     # Gauth apps 
     'django.contrib.sites',
     'allauth',
@@ -100,6 +102,7 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "allauth.account.middleware.AccountMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -207,45 +210,56 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-# AWS S3 SETTINGS
-AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
-AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
-AWS_S3_REGION_NAME = config("AWS_S3_REGION_NAME")
-AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
-AWS_DEFAULT_ACL = None
-AWS_S3_FILE_OVERWRITE = False
-AWS_QUERYSTRING_AUTH = False
-AWS_S3_OBJECT_PARAMETERS = {
-    "CacheControl": "max-age=86400",
+#CLOUDINARY STORAGE
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': config("CLOUD_NAME"),
+    "API_KEY": config("API_KEY"),
+    "API_SECRET": config("API_SECRET")
 }
+
+DEFAUT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+
+# # AWS S3 SETTINGS
+# AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
+# AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
+# AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
+# AWS_S3_REGION_NAME = config("AWS_S3_REGION_NAME")
+# AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+# AWS_DEFAULT_ACL = None
+# AWS_S3_FILE_OVERWRITE = False
+# AWS_QUERYSTRING_AUTH = False
+# AWS_S3_OBJECT_PARAMETERS = {
+#     "CacheControl": "max-age=86400",
+# }
 
 MEDIAFILES_LOCATION = "media"
 STATICFILES_LOCATION = "static"
 
+# if DEBUG:
+#     STATIC_URL = "static/"
+#     STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+#     MEDIA_URL = "/media/"
+#     MEDIA_ROOT = BASE_DIR / "media"
+# else:
+#     # Media files configuration
+#     # MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/"
+
+#     # Static files configuration
+STATIC_URL = "static/"
 if DEBUG:
-    STATIC_URL = "static/"
     STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
-    MEDIA_URL = "/media/"
-    MEDIA_ROOT = BASE_DIR / "media"
-else:
-    # Media files configuration
-    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/"
-
-    # Static files configuration
-    STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}/"
-
-STORAGES = {
-    "default": {
-        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
-        "OPTIONS": {"location": MEDIAFILES_LOCATION},
-    },
-    "staticfiles": {
-        "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
-        "OPTIONS": {"location": STATICFILES_LOCATION},
-    },
-}
+# STORAGES = {
+#     "default": {
+#         "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+#         "OPTIONS": {"location": MEDIAFILES_LOCATION},
+#     },
+#     "staticfiles": {
+#         "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
+#         "OPTIONS": {"location": STATICFILES_LOCATION},
+#     },
+# }
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

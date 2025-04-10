@@ -1,8 +1,10 @@
 import os
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes.fields import GenericForeignKey
+from cloudinary_storage.storage import MediaCloudinaryStorage
+
+# from django.contrib.contenttypes.models import ContentType
+# from django.contrib.contenttypes.fields import GenericForeignKey
 from .utils import rename_avatar
 
 
@@ -37,7 +39,11 @@ class SportaUser(AbstractUser):
     first_name = None
     last_name = None
     full_name = models.CharField(max_length=350)
-    avatar = models.ImageField(upload_to=rename_avatar, blank=True)
+    avatar = models.ImageField(
+        upload_to=rename_avatar,
+        blank=True,
+        storage=MediaCloudinaryStorage,
+    )
     role = models.CharField(max_length=10, choices=ROLES_CHOICES, blank=True)
     sport = models.CharField(max_length=100, blank=True)
 
@@ -50,7 +56,11 @@ class SportaUser(AbstractUser):
 class Team(models.Model):
     name = models.CharField(max_length=30)
     year_founded = models.IntegerField()
-    logo = models.ImageField(upload_to="Team/", blank=True)
+    logo = models.ImageField(
+        upload_to="Team/",
+        blank=True,
+        storage=MediaCloudinaryStorage,
+    )
     home_stadium = models.CharField(max_length=30)
     formation = models.CharField(max_length=10)
 
@@ -59,33 +69,32 @@ class Team(models.Model):
 
 
 class AthleteProfile(models.Model):
-    user = models.ForeignKey(SportaUser, on_delete=models.CASCADE)
-    age = models.IntegerField()
-    height = models.FloatField()
-    weight = models.FloatField()
+    user = models.OneToOneField(
+        SportaUser, on_delete=models.CASCADE, related_name="athlete"
+    )
+    age = models.IntegerField(blank=True, null=True)
+    height = models.FloatField(blank=True, null=True)
+    weight = models.FloatField(blank=True, null=True)
     nickname = models.CharField(max_length=30, blank=True)
-    position = models.CharField(max_length=10)
+    position = models.CharField(max_length=10, blank=True)
     team = models.ForeignKey(
         Team,
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
     )
-    jersey_no = models.IntegerField()
-    nationality = models.CharField(max_length=30)
+    jersey_no = models.IntegerField(blank=True, null=True)
+    nationality = models.CharField(max_length=30, blank=True)
 
     def __str__(self):
         return self.user.full_name
 
-    class Meta:
-        default_related_name = "athletes"
-
 
 class CoachProfile(models.Model):
-    user = models.ForeignKey(SportaUser, on_delete=models.CASCADE)
-    age = models.IntegerField()
-    years_of_experience = models.IntegerField()
-    coaching_style = models.CharField(max_length=30)
+    user = models.OneToOneField(SportaUser, on_delete=models.CASCADE)
+    age = models.IntegerField(null=True, blank=True)
+    years_of_experience = models.IntegerField(null=True, blank=True)
+    coaching_style = models.CharField(max_length=30, blank=True)
     team = models.ForeignKey(
         Team,
         on_delete=models.SET_NULL,
@@ -101,10 +110,17 @@ class CoachProfile(models.Model):
 
 
 class AnalystProfile(models.Model):
-    user = models.ForeignKey(SportaUser, on_delete=models.CASCADE)
-    age = models.IntegerField()
-    years_of_experience = models.IntegerField()
+    user = models.OneToOneField(
+        SportaUser,
+        on_delete=models.CASCADE,
+        related_name="analyst",
+    )
+    age = models.IntegerField(null=True, blank=True)
+    years_of_experience = models.IntegerField(null=True, blank=True)
     specialization = models.CharField(blank=True, max_length=50)
+
+    def __str__(self):
+        return self.user.full_name
 
 
 class Match(models.Model):
@@ -287,6 +303,7 @@ class Message(Timestamp):
     def __str__(self):
         return f"message from {self.sender.full_name}"
 
+
 class Alert(Timestamp):
     CATEGORIES = [
         ("injury_risk", "Injury Risk"),
@@ -298,7 +315,8 @@ class Alert(Timestamp):
 
     def __str__(self):
         return self.message
-    
+
+
 class AlertInteraction(Timestamp):
     alert = models.ForeignKey(
         Alert,
@@ -307,6 +325,6 @@ class AlertInteraction(Timestamp):
     )
     user = models.ForeignKey(SportaUser, models.CASCADE)
     is_read = models.BooleanField(default=False)
-    
+
     def __str__(self):
         return f"{self.user.full_name} - {self.alert.message}"
