@@ -13,9 +13,6 @@ def delete_profile(Object, instance):
 
 @receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):
-    if not created:
-        print("user was updated")
-    print("from signal")
     user = instance
     if user.role:
         if user.role == "athlete":

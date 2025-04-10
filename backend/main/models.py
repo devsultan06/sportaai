@@ -1,6 +1,7 @@
 import os
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
+from cloudinary_storage.storage import MediaCloudinaryStorage
 
 # from django.contrib.contenttypes.models import ContentType
 # from django.contrib.contenttypes.fields import GenericForeignKey
@@ -38,7 +39,11 @@ class SportaUser(AbstractUser):
     first_name = None
     last_name = None
     full_name = models.CharField(max_length=350)
-    avatar = models.ImageField(upload_to=rename_avatar, blank=True)
+    avatar = models.ImageField(
+        upload_to=rename_avatar,
+        blank=True,
+        storage=MediaCloudinaryStorage,
+    )
     role = models.CharField(max_length=10, choices=ROLES_CHOICES, blank=True)
     sport = models.CharField(max_length=100, blank=True)
 
@@ -51,7 +56,11 @@ class SportaUser(AbstractUser):
 class Team(models.Model):
     name = models.CharField(max_length=30)
     year_founded = models.IntegerField()
-    logo = models.ImageField(upload_to="Team/", blank=True)
+    logo = models.ImageField(
+        upload_to="Team/",
+        blank=True,
+        storage=MediaCloudinaryStorage,
+    )
     home_stadium = models.CharField(max_length=30)
     formation = models.CharField(max_length=10)
 
