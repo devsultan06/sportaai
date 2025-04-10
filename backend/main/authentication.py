@@ -15,7 +15,6 @@ class SportaCookieAuthentication(BaseAuthentication):
         try:
             token = AccessToken(access_token)
             user_id = token.get("user_id")
-            print(token)
         except Exception:
             raise AuthenticationFailed(
                 {"message": "Token has either expired or invalid"},
