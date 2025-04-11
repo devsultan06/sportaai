@@ -1,19 +1,15 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { registerUser } from "../../../api/auth";
+import { toast } from "react-toastify";
 
 const useRegister = () => {
   const [loading, setLoading] = useState(false);
-  const [snackbarData, setSnackbarData] = useState({
-    open: false,
-    message: "",
-    severity: "error",
-  });
+  
   const navigate = useNavigate();
 
   const handleRegister = async (data) => {
     setLoading(true);
-    setSnackbarData({ open: false, message: "", severity: "error" });
 
     try {
       const { email, password, confirmPassword, fullName } = data;
@@ -28,21 +24,21 @@ const useRegister = () => {
 
       console.log("Registration Successful:", result);
       localStorage.setItem("registeredEmail", email);
-      localStorage.setItem("otpCountdownStarted", "true"); 
-      navigate("/verify");
+      localStorage.setItem("otpCountdownStarted", "true");
+      toast.success("Registered successfully! Redirecting...");
+
+      setTimeout(() => {
+        navigate("/verify");
+      }, 4000);
     } catch (error) {
       console.error("Registration Error:", error.message);
-      setSnackbarData({
-        open: true,
-        message: error.message,
-        severity: "error",
-      });
+      toast.error(error.message || "Registration failed.");
     } finally {
       setLoading(false);
     }
   };
 
-  return { handleRegister, loading, snackbarData, setSnackbarData };
+  return { handleRegister, loading};
 };
 
 export default useRegister;

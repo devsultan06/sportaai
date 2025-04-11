@@ -9,7 +9,7 @@ import Background from "../../../components/ui/BackGround";
 import GradientButton from "../../../components/ui/GradientButton";
 import TextField from "../../../components/ui/TextField";
 import { requestPasswordReset, resetPasswordConfirm } from "../../../api/auth";
-import Modal from "../../../components/ui/Modal";
+import { toast } from "react-toastify";
 
 const schema = z
   .object({
@@ -29,11 +29,7 @@ const SetNewPassword = () => {
   const inputRefs = useRef([]);
   const [loading, setLoading] = useState(false);
   const [resendCountdown, setResendCountdown] = useState(60);
-  const [snackbarData, setSnackbarData] = useState({
-    open: false,
-    message: "",
-    severity: "error",
-  });
+
   const [resendLoading, setResendLoading] = useState(false);
 
   useEffect(() => {
@@ -95,7 +91,6 @@ const SetNewPassword = () => {
 
   const onSubmit = async (data) => {
     setLoading(true);
-    setSnackbarData({ open: false, message: "", severity: "error" });
 
     if (!email) {
       setError("No email found. Please restart the reset process.");
@@ -115,21 +110,14 @@ const SetNewPassword = () => {
       console.log("Password reset response:", response);
 
       if (response.success) {
-        navigate("/login");
+        toast.success("Password updated! Redirecting...");
+        setTimeout(() => navigate("/login"), 2000);
       } else {
-        setSnackbarData({
-          open: true,
-          message: response.message,
-          severity: "error",
-        });
+        toast.error(response.message || "Something went wrong.");
       }
     } catch (error) {
       console.error("Unexpected error:", error);
-      setSnackbarData({
-        open: true,
-        message: "Something went wrong. Please try again.",
-        severity: "error",
-      });
+      toast.error("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -137,11 +125,7 @@ const SetNewPassword = () => {
 
   const handleResendCode = async () => {
     if (!email) {
-      setSnackbarData({
-        open: true,
-        message: "Email not found. Please restart registration.",
-        severity: "error",
-      });
+      toast.error("No email found. Please restart the reset process.");
       return;
     }
 
@@ -150,18 +134,10 @@ const SetNewPassword = () => {
 
     try {
       const response = await requestPasswordReset(email);
-      setSnackbarData({
-        open: true,
-        message: response.message,
-        severity: "success",
-      });
+      toast.success(response.message || "OTP sent!");
       setResendCountdown(60);
     } catch (error) {
-      setSnackbarData({
-        open: true,
-        message: error.message,
-        severity: "error",
-      });
+      toast.error(error.message || "Failed to resend code.");
     } finally {
       setResendLoading(false);
     }
@@ -262,12 +238,6 @@ const SetNewPassword = () => {
             </div>
           </form>
         </div>
-        <Modal
-          open={snackbarData.open}
-          onClose={() => setSnackbarData({ ...snackbarData, open: false })}
-          severity={snackbarData.severity}
-          message={snackbarData.message}
-        />
       </motion.div>
     </Background>
   );
