@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { resendActivationCode, verifyOtp } from "../../../api/auth";
+import { toast } from "react-toastify";
 
 const useOtpVerification = () => {
   const email = localStorage.getItem("registeredEmail");
@@ -10,22 +11,6 @@ const useOtpVerification = () => {
   const [loading, setLoading] = useState(false);
   const [resendLoading, setResendLoading] = useState(false);
   const [resendCountdown, setResendCountdown] = useState(60);
-  const [snackbarData, setSnackbarData] = useState({
-    open: false,
-    message: "",
-    severity: "error",
-  });
-
-  useEffect(() => {
-    if (!email) {
-      const storedEmail = localStorage.getItem("verifiedEmail");
-      if (storedEmail) {
-        navigate("/login");
-      } else {
-        navigate("/register");
-      }
-    }
-  }, [navigate, email]);
 
   useEffect(() => {
     let timer;
@@ -73,22 +58,20 @@ const useOtpVerification = () => {
     const enteredOtp = otp.join("");
     if (enteredOtp.length === 4) {
       setLoading(true);
-      setSnackbarData({ open: false, message: "", severity: "error" });
 
       try {
         const result = await verifyOtp(email, enteredOtp);
         console.log("User verified successfully:", result);
         localStorage.setItem("verifiedEmail", email);
         localStorage.removeItem("registeredEmail");
-        navigate("/login");
+        toast.success("User verified successfully: Redirecting...");
+
+        setTimeout(() => {
+          navigate("/login");
+        }, 4000);
       } catch (error) {
         console.error("Verification failed:", error);
-
-        setSnackbarData({
-          open: true,
-          message: error.message || "Verification failed",
-          severity: "error",
-        });
+        toast.error(error.message || "Verification failed");
       } finally {
         setLoading(false);
       }
@@ -97,31 +80,22 @@ const useOtpVerification = () => {
 
   const handleResendCode = async () => {
     if (!email) {
-      setSnackbarData({
-        open: true,
-        message: "Email not found. Please restart registration.",
-        severity: "error",
-      });
+      toast.error("Email not found. Please restart registration.");
       return;
     }
 
     setResendLoading(true);
-    setSnackbarData({ open: false, message: "", severity: "error" });
 
     try {
       const response = await resendActivationCode(email);
       setResendCountdown(60);
-      setSnackbarData({
-        open: true,
-        message: response.message,
-        severity: response.success ? "success" : "error",
-      });
+      if (response.success) {
+        toast.success(response.message);
+      } else {
+        toast.error(response.message);
+      }
     } catch (error) {
-      setSnackbarData({
-        open: true,
-        message: error.message,
-        severity: "error",
-      });
+      toast.error(error.message || "Failed to resend code.");
     } finally {
       setResendLoading(false);
     }
@@ -133,9 +107,7 @@ const useOtpVerification = () => {
     inputRefs,
     loading,
     resendLoading,
-    snackbarData,
     resendCountdown,
-    setSnackbarData,
     handleChange,
     handleKeyDown,
     handleSubmit,

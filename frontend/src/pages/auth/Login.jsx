@@ -8,11 +8,10 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import loginSchema from "../../schemas/loginSchema";
-import Modal from "../../components/ui/Modal";
 import useLogin from "./hook/useLogin";
 
 const Login = () => {
-  const { handleLogin, loading, snackbarData, setSnackbarData } = useLogin();
+  const { handleLogin, loading} = useLogin();
   const navigate = useNavigate();
   const storedEmail =
     localStorage.getItem("verifiedEmail") ||
@@ -100,13 +99,6 @@ const Login = () => {
             <SocialAuth type="login" />
           </div>
         </div>
-
-        <Modal
-          open={snackbarData.open}
-          onClose={() => setSnackbarData({ ...snackbarData, open: false })}
-          severity={snackbarData.severity}
-          message={snackbarData.message}
-        />
       </motion.div>
     </Background>
   );

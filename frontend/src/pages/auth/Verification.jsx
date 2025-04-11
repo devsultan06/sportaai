@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { useEffect } from "react";
 import Background from "../../components/ui/BackGround";
 import GradientButton from "../../components/ui/GradientButton";
-import Modal from "../../components/ui/Modal";
 import useOtpVerification from "./hook/useOtpVerification";
 
 const Verification = () => {
@@ -12,9 +11,7 @@ const Verification = () => {
     inputRefs,
     loading,
     resendLoading,
-    snackbarData,
     resendCountdown,
-    setSnackbarData,
     handleChange,
     handleKeyDown,
     handleSubmit,
@@ -99,13 +96,6 @@ const Verification = () => {
             />
           </div>
         </div>
-
-        <Modal
-          open={snackbarData.open}
-          onClose={() => setSnackbarData({ ...snackbarData, open: false })}
-          severity={snackbarData.severity}
-          message={snackbarData.message}
-        />
       </motion.div>
     </Background>
   );

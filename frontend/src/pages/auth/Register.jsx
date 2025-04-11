@@ -7,7 +7,6 @@ import TextField from "../../components/ui/TextField";
 import SocialAuth from "../../components/layouts/SocialAuth";
 import { useEffect } from "react";
 import registerSchema from "../../schemas/registerSchema";
-import Modal from "../../components/ui/Modal";
 import useRegister from "./hook/useRegister";
 
 const Register = () => {
@@ -26,27 +25,33 @@ const Register = () => {
     resolver: zodResolver(registerSchema),
   });
 
-  // const openGooglePopup = () => {
-  //   const width = 500;
-  //   const height = 600;
-  //   const left = window.innerWidth / 2 - width / 2;
-  //   const top = window.innerHeight / 2 - height / 2;
+  const openGooglePopup = () => {
+    const width = 500;
+    const height = 600;
+    const left = window.innerWidth / 2 - width / 2;
+    const top = window.innerHeight / 2 - height / 2;
 
-  //   const popup = window.open(
-  //     "https://sportaai.onrender.com/api/auth/google/login/", // your backend's /login
-  //     "GoogleSignIn",
-  //     `width=${width},height=${height},top=${top},left=${left}`
-  //   );
+    window.open(
+      "https://sportaai.onrender.com/api/auth/google/login/",
+      "GoogleSignIn",
+      `width=${width},height=${height},top=${top},left=${left},scrollbars=yes,resizable=yes`
+    );
 
-  //   // Polling the popup window to see when it closes
-  //   const popupInterval = setInterval(() => {
-  //     if (popup?.closed) {
-  //       clearInterval(popupInterval);
-  //       // When closed, route to sport page or refetch auth state
-  //       window.location.href = "/sport"; // or use navigate("/sport") if using React Router
-  //     }
-  //   }, 500);
-  // };
+    const checkInterval = setInterval(() => {
+      const data = localStorage.getItem("google-auth-data");
+
+      if (data) {
+        clearInterval(checkInterval);
+        try {
+          const user = JSON.parse(data);
+          console.log("Logged in via Google:", user);
+          window.location.href = "/sport";
+        } catch (e) {
+          console.error("Failed to parse auth data:", e);
+        }
+      }
+    }, 500);
+  };
 
   return (
     <Background bgImage="/images/bg.png">
@@ -113,12 +118,6 @@ const Register = () => {
         </div>
       </motion.div>
 
-      <Modal
-        open={snackbarData.open}
-        onClose={() => setSnackbarData({ ...snackbarData, open: false })}
-        severity={snackbarData.severity}
-        message={snackbarData.message}
-      />
     </Background>
   );
 };
