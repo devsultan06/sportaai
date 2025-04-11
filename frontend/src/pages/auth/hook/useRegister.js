@@ -5,16 +5,11 @@ import { toast } from "react-toastify";
 
 const useRegister = () => {
   const [loading, setLoading] = useState(false);
-  const [snackbarData, setSnackbarData] = useState({
-    open: false,
-    message: "",
-    severity: "error",
-  });
+  
   const navigate = useNavigate();
 
   const handleRegister = async (data) => {
     setLoading(true);
-    setSnackbarData({ open: false, message: "", severity: "error" });
 
     try {
       const { email, password, confirmPassword, fullName } = data;
@@ -43,7 +38,7 @@ const useRegister = () => {
     }
   };
 
-  return { handleRegister, loading, snackbarData, setSnackbarData };
+  return { handleRegister, loading};
 };
 
 export default useRegister;
