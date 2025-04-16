@@ -18,15 +18,11 @@ export default {
     },
     screens: {
       tablet: "-800px",
-
       laptop: "1024px",
-
       desktop: "1280px",
       "max-590": { max: "590px" },
       "max-600": { max: "600px" },
-
       "max-800": { max: "800px" },
-
       "max-860": { max: "860px" },
       "max-920": { max: "920px" },
       "max-990": { max: "990px" },
@@ -37,10 +33,11 @@ export default {
       xl: "2rem",
       xxl: "2.5rem",
     },
+    
     fontFamily: {
-      metropolis: ["Metropolis", "sans-serif"], // Add Metrophobic font
-      metropolisBold: ["MetropolisBold", "sans-serif"], // Add Metrophobic font
-      Nabla: ["Nabla", "system-ui"], // Add Nebla font
+      metropolis: ["Metropolis", "sans-serif"], 
+      metropolisBold: ["MetropolisBold", "sans-serif"], 
+      Nabla: ["Nabla", "system-ui"], 
     },
     extend: {},
   },
