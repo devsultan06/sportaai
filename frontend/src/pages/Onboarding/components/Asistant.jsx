@@ -15,9 +15,7 @@ const Assistant = ({ swiperRef }) => {
 
             className="flex max-860:flex-col max-860:gap-[30px] max-860:justify-center max-860:mx-auto justify-center items-center gap-[100px] w-full p-8 h-screen max-1075:h-fit"
         >
-            <div className="relative opacity-70">
-                {/* <Chatbot /> */}
-                <img
+            <div className="relative opacity-70">                <img
                     src="/images/chat.png"
                     alt="Smart Watch"
                     className="w-[400px] mix-blend-overlay"
