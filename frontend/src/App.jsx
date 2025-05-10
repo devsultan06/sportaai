@@ -8,10 +8,28 @@ import Verification from "./pages/auth/Verification";
 import Landing from "./pages/landing-page/Landing";
 import SetNewPassword from "./pages/auth/account-recovery/SetNewPassword";
 import Reset from "./pages/auth/account-recovery/Reset";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useEffect } from "react";
 
 const App = () => {
+  useEffect(() => {
+    if (!navigator.onLine) {
+      toast.error("You're currently offline.");
+    }
+
+    const handleOffline = () => toast.error("You are now offline.");
+    const handleOnline = () => toast.success("You're back online!");
+
+    window.addEventListener("offline", handleOffline);
+    window.addEventListener("online", handleOnline);
+
+    return () => {
+      window.removeEventListener("offline", handleOffline);
+      window.removeEventListener("online", handleOnline);
+    };
+  }, []);
+
   return (
     <BrowserRouter>
       <ToastContainer position="top-right" autoClose={3000} />

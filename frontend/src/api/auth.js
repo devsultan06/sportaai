@@ -24,6 +24,9 @@ export const registerUser = async (userData) => {
     console.log("Registration successful:", result);
     return result;
   } catch (error) {
+    if (error instanceof TypeError) {
+      throw new Error("Network error. Please check your internet connection.");
+    }
     console.error("Error during registration:", error);
     throw error;
   }
@@ -80,6 +83,10 @@ export const loginUser = async (email, password) => {
     console.log("Login successful:", result);
     return result;
   } catch (error) {
+    if (error instanceof TypeError) {
+      throw new Error("Network error. Please check your internet connection.");
+    }
+
     console.error("Error during login:", error.message);
     throw error;
   }
@@ -111,6 +118,9 @@ export const requestPasswordReset = async (email) => {
     console.log("Password reset email sent:", result);
     return result;
   } catch (error) {
+    if (error instanceof TypeError) {
+      throw new Error("Network error. Please check your internet connection.");
+    }
     console.error("Error during password reset request:", error);
     throw error;
   }
@@ -158,6 +168,9 @@ export const resetPasswordConfirm = async ({
 
     return { success: true, message: result.message };
   } catch (error) {
+    if (error instanceof TypeError) {
+      throw new Error("Network error. Please check your internet connection.");
+    }
     console.error("Error resetting password:", error);
     return { success: false, message: error.message };
   }
@@ -183,6 +196,9 @@ export const resendActivationCode = async (email) => {
       message: "A new activation code has been sent to your email.",
     };
   } catch (error) {
+    if (error instanceof TypeError) {
+      throw new Error("Network error. Please check your internet connection.");
+    }
     console.error("Error resending activation code:", error);
     return { success: false, message: error.message };
   }
