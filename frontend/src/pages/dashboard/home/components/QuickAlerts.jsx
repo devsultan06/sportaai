@@ -1,3 +1,5 @@
+import { alerts } from "../../../../data/alerts";
+
 export const QuickAlerts = () => (
   <div className=" rounded-xl  text-white">
     <div className="flex justify-between items-center alert-box py-[16px] rounded-t-md  px-[24px]">
@@ -16,21 +18,35 @@ export const QuickAlerts = () => (
       </div>
     </div>
 
-    {[...Array(3)].map((_, i) => (
-      <div key={i} className="alert-item">
-        <p className="text-[14px] w-[80%] font-[400] font-metropolis text-[#FFf]">
-          Coach Williams team has a 70% injury risk this month
-        </p>
-        <div className="flex items-center gap-2 mt-2">
-          <button className="bg-blue-600 px-3 py-1 rounded text-sm">
-            Review
-          </button>
-          <button className="bg-gray-700 px-3 py-1 rounded text-sm">
-            Resolve
-          </button>
-          <span className="text-red-500 text-lg ml-auto">⚠️</span>
+    {alerts.map((alert, i) => (
+      <div key={i} className="alert-item bg-[#1f1f1f] p-4 ">
+        <div className="flex items-start justify-between">
+          <div>
+            <div className="flex items-start gap-3">
+              <div>
+                <img src="/images/club.png" alt="Alert Icon" className="" />
+              </div>
+              <div>
+                <p className="text-[14px] w-[90%] font-[400] text-white">
+                  {alert.message}
+                </p>
+                <div className="flex items-center gap-2 mt-[12px]">
+                  <button className="review text-white px-3 py-[4px] rounded-[8px] text-[14px] font-[400]">
+                    View
+                  </button>
+                  <button className="resolve text-white px-3 py-[4px] rounded-[8px] text-[14px] font-[400]">
+                    Resolve
+                  </button>
+                </div>
+                <p className="text-[13px] font-[500] ago  mt-[12px]">
+                  {alert.time}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <img src={alert.icon} alt="Arrow Icon" className="cursor-pointer" />
         </div>
-        <p className=" text-[13px] font-[500] mt-1 ago">8 min ago</p>
       </div>
     ))}
   </div>
