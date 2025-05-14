@@ -27,6 +27,8 @@ export default {
       metropolisBold: ["MetropolisBold", "sans-serif"],
       Nabla: ["Nabla", "system-ui"],
       poppins: ["Poppins", "sans-serif"],
+      sora : ["Sora", "sans-serif"],
+      inter : ["Inter", "sans-serif"],
     },
     extend: {
       screens: {

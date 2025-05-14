@@ -29,12 +29,8 @@ const SidebarMenu = ({ collapsed, setCollapsed }) => {
     />
   );
 
-  const Tooltip = ({ message }) => (
-    <div className=" bg-black text-white text-sm px-2 py-1">{message}</div>
-  );
-
   return (
-    <div className="h-screen bg-[#1E1E1E] font-metropolis  text-white">
+    <div className="h-screen z-10 bg-[#1E1E1E] font-metropolis  text-white">
       <Sidebar
         collapsed={collapsed}
         breakPoint="md"
@@ -77,7 +73,7 @@ const SidebarMenu = ({ collapsed, setCollapsed }) => {
 
           <Menu iconShape="circle" className="mt-[30px] ">
             {!collapsed && (
-              <div className="text-[18px] px-4 mb-[20px] text-[#8C8C8C] font-[600]">
+              <div className="text-[16px] px-4 mb-[20px] text-[#8C8C8C] font-[600]">
                 Overview
               </div>
             )}
@@ -265,7 +261,7 @@ const SidebarMenu = ({ collapsed, setCollapsed }) => {
         <div className="mb-4 mt-[70px]">
           <Menu iconShape="circle">
             {!collapsed && (
-              <div className="text-[18px] px-4 mb-[20px] text-[#8C8C8C] font-[600]">
+              <div className="text-[16px] px-4 mb-[20px] text-[#8C8C8C] font-[600]">
                 Settings
               </div>
             )}

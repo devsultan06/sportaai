@@ -12,7 +12,16 @@ const Dashboard = () => {
         <SidebarMenu collapsed={collapsed} setCollapsed={setCollapsed} />
       </div>
 
-      <div className="flex-1 overflow-y-auto relative z-10 h-screen bg-[#121212] text-white">
+      <div
+        className="flex-1 overflow-y-auto relative z-50 h-screen bg-[#121212] text-white"
+        style={{
+          backgroundImage: "url('/images/dashbg.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "90% 0%",
+          backgroundRepeat: "no-repeat",
+          backgroundAttachment: "fixed",
+        }}
+      >
         <DashboardNavbar collapsed={collapsed} />
         <div className=" pt-[153px] px-[33px] pb-[50px]">
           <Outlet />
