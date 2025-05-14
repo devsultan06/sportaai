@@ -32,13 +32,46 @@ const todaysPicksData = [
     },
     image: "/images/pick3.png",
   },
+  {
+    number: 89,
+    name: "RAPHINHA",
+    type: ["Football", "Barcelona", "CF"],
+    stats: {
+      goals: 10,
+      assists: 6,
+      matches: 14,
+    },
+    image: "/images/pick2.png",
+  },
+  {
+    number: 95,
+    name: "EMERY",
+    type: ["Football", "Barcelona", "Coach"],
+    stats: {
+      wins: 14,
+      draws: 4,
+      losses: 2,
+    },
+    image: "/images/pick1.png",
+  },
+  {
+    number: 85,
+    name: "BURNLEY",
+    type: ["Football", "Barcelona", "Team"],
+    stats: {
+      wins: 14,
+      draws: 4,
+      losses: 2,
+    },
+    image: "/images/pick3.png",
+  },
   // Add remaining cards as needed...
 ];
 
 export const TodaysPicks = () => (
   <div className="rounded-xl w-full mt-[32px] text-white">
     <h2 className="text-[16px] font-[600] mb-4">Todays Picks</h2>
-    <div className="grid grid-cols-2 w-full md:grid-cols-3 lg:grid-cols-3  gap-4">
+    <div className="grid grid-cols-1 w-full md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3  gap-4">
       {todaysPicksData.map((pick, i) => (
         <div
           key={i}
@@ -60,7 +93,9 @@ export const TodaysPicks = () => (
           />
           <div className="bottom-0 mb-[16px] absolute z-30">
             <div className="mt-2 ">
-              <h3 className="font-[400] lowercase today-name text-[21px]">{pick.name}</h3>
+              <h3 className="font-[400] lowercase today-name text-[21px]">
+                {pick.name}
+              </h3>
               <div className="flex flex-wrap gap-2 mt-1">
                 {pick.type.map((label, idx) => (
                   <span
@@ -77,7 +112,7 @@ export const TodaysPicks = () => (
                     key={key}
                     className="text-[11px] font-[400] text-white bg-[#2A2A2A] px-[6px] py-[2.286px] rounded-[28.571px]"
                   >
-                   <span className="stat-number">{value}</span>  {key}
+                    <span className="stat-number">{value}</span> {key}
                   </span>
                 ))}
               </div>

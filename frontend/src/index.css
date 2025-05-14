@@ -36,6 +36,9 @@ div.pick {
   position: relative;
 }
 
+div.pick {
+  background: linear-gradient(270deg, #ffbb34 0%, #ff256f 120.55%);
+}
 div.choose::before,
 div.menu::before {
   content: "";
@@ -154,6 +157,10 @@ div.code input {
   font-family: "Nebula", cursive;
 }
 
+.today-div {
+  background: linear-gradient(270deg, #ffbb34 0%, #ff256f 120.55%);
+}
+
 .pick-number {
   border-radius: 8px;
   background: rgba(42, 42, 42, 0.5);
@@ -214,4 +221,32 @@ button.second {
 .match {
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.alert-box {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: #1e1e1e;
+  box-shadow: 0px 7px 4px 0px rgba(0, 0, 0, 0.02),
+    0px 3px 3px 0px rgba(0, 0, 0, 0.03), 0px 1px 2px 0px rgba(0, 0, 0, 0.04),
+    0px 0px 0px 0px rgba(0, 0, 0, 0.04);
+}
+
+.read {
+  background: var(
+    --gradient,
+    linear-gradient(270deg, #ffbb34 0%, #ff256f 120.55%)
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.alert-item {
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: #1e1e1e;
+  padding: 16px 16px 16px 24px;
+}
+
+.ago{
+  color: rgba(250, 250, 250, 0.60);
 }
