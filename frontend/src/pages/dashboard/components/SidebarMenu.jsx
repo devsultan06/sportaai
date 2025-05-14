@@ -3,7 +3,7 @@ import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 
 import logo from "/images/sidelogo.png";
 
-import dashboardIcon from "/images/home.png";
+import dashboardIcon from "/images/Home.png";
 import dashboardIconActive from "/images/homeactive.png";
 import exploreIcon from "/images/explore.png";
 import exploreIconActive from "/images/exploreactive.png";
