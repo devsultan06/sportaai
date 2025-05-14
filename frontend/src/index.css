@@ -25,15 +25,17 @@ button.create {
   background: linear-gradient(90deg, #ffbb34 -2.75%, #ff256f 100%), #1a1a1a;
   box-shadow: 8px 8px 8px 0px rgba(255, 255, 255, 0.2) inset;
 }
-div.choose,div.menu {
+div.choose,
+div.menu {
   position: relative;
-  border: 3px solid transparent; 
+  border: 3px solid transparent;
 }
 
-div.choose::before, div.menu::before {
+div.choose::before,
+div.menu::before {
   content: "";
   position: absolute;
-  inset: 0; 
+  inset: 0;
   padding: 3px;
   border-radius: inherit;
   background: linear-gradient(90deg, #ffbb34 -2.75%, #ff256f 100%);
@@ -44,7 +46,6 @@ div.choose::before, div.menu::before {
 
 input:focus {
   border: 1px solid var(--gradient, #ffbb34);
-
 }
 
 button.google,
@@ -83,11 +84,10 @@ div.code input {
   position: relative;
 }
 
-.nav{
+.nav {
   border-radius: 500px;
   border: 1px solid #37393c;
   background: rgba(30, 30, 30, 0.2);
-  
 }
 
 .launching {
@@ -131,4 +131,12 @@ button.second {
 
 .send-box input {
   background: transparent;
+}
+
+.custom-sidebar .ps-sidebar-container {
+  background-color: #1e1e1e !important;
+  color: white;
+  border-right: none !important;
+  box-shadow: none !important;
+  outline: none !important;
 }
