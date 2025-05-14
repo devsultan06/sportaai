@@ -4,7 +4,7 @@ const DashboardNavbar = ({ collapsed }) => {
   const sidebarWidth = !collapsed ? 300 : 80;
   return (
     <div
-      className="fixed top-0 right-0 bg-[#1E1E1E] font-metropolis text-white px-[40px] py-[22px] flex items-center justify-between"
+      className="fixed top-0 z-30 bg-[#1E1E1E] font-metropolis text-white px-[40px] py-[22px] flex items-center justify-between"
       style={{
         width: `calc(100% - ${sidebarWidth}px)`,
         left: `${sidebarWidth}px`,
@@ -48,7 +48,7 @@ const DashboardNavbar = ({ collapsed }) => {
           <img
             src="/images/profilepic.png"
             alt="Profile"
-            className="w-10 h-10 rounded-full object-cover cursor-pointer"
+            className="w-9 h-9 rounded-full object-cover cursor-pointer"
           />
           <img
             src="/images/arrow-bottom.png"
