@@ -8,6 +8,7 @@ import dashboardIconActive from "/images/homeactive.png";
 import exploreIcon from "/images/explore.png";
 import exploreIconActive from "/images/exploreactive.png";
 import inventoryIcon from "/images/invent.png";
+import inventoryIconActive from "/images/inventactive.png"
 import sponsorshipIcon from "/images/spons.png";
 import sponsorshipIconActive from "/images/sponsactive.png";
 import matchIcon from "/images/live.png";
@@ -16,6 +17,7 @@ import aiIcon from "/images/dooda.png";
 import settingsIcon from "/images/settings.png";
 import settingsIconActive from "/images/settingsactive.png";
 import profileIcon from "/images/profile.png";
+import profileIconActive from "/images/profileactive.png"
 import { NavLink } from "react-router-dom";
 
 const SidebarMenu = () => {
@@ -167,7 +169,7 @@ const SidebarMenu = () => {
                     collapsed ? "justify-center" : "items-center"
                   }`}
                 >
-                  {renderIcon(inventoryIcon, "Inventory", isActive)}{" "}
+                  {renderIcon(inventoryIcon, "Inventory", isActive,inventoryIconActive)}{" "}
                   {!collapsed && <span className="ml-4">Inventory</span>}
                 </div>
               )}
@@ -311,7 +313,7 @@ const SidebarMenu = () => {
                     collapsed ? "justify-center" : "items-center"
                   }`}
                 >
-                  {renderIcon(profileIcon, "Profile", isActive)}{" "}
+                  {renderIcon(profileIcon, "Profile", isActive,profileIconActive)}{" "}
                   {!collapsed && <span className="ml-4">Profile</span>}
                 </div>
               )}
