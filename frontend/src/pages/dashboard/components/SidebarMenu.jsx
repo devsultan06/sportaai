@@ -8,7 +8,7 @@ import dashboardIconActive from "/images/homeactive.png";
 import exploreIcon from "/images/explore.png";
 import exploreIconActive from "/images/exploreactive.png";
 import inventoryIcon from "/images/invent.png";
-import inventoryIconActive from "/images/inventactive.png"
+import inventoryIconActive from "/images/inventactive.png";
 import sponsorshipIcon from "/images/spons.png";
 import sponsorshipIconActive from "/images/sponsactive.png";
 import matchIcon from "/images/live.png";
@@ -17,12 +17,10 @@ import aiIcon from "/images/dooda.png";
 import settingsIcon from "/images/settings.png";
 import settingsIconActive from "/images/settingsactive.png";
 import profileIcon from "/images/profile.png";
-import profileIconActive from "/images/profileactive.png"
+import profileIconActive from "/images/profileactive.png";
 import { NavLink } from "react-router-dom";
 
-const SidebarMenu = () => {
-  const [collapsed, setCollapsed] = useState(false);
-
+const SidebarMenu = ({ collapsed, setCollapsed }) => {
   const renderIcon = (src, alt, isActive, activeSrc = null) => (
     <img
       src={isActive && activeSrc ? activeSrc : src}
@@ -60,7 +58,7 @@ const SidebarMenu = () => {
 
             {!collapsed && (
               <button
-                onClick={() => setCollapsed(!collapsed)}
+                onClick={() => setCollapsed((prev) => !prev)}
                 className="text-white ml-4 pt-[10px] flex justify-center items-center focus:outline-none"
               >
                 <img src="/images/menu2.png" alt="Toggle" className="w-5 h-5" />
@@ -69,7 +67,7 @@ const SidebarMenu = () => {
 
             {collapsed && (
               <button
-                onClick={() => setCollapsed(!collapsed)}
+                onClick={() => setCollapsed((prev) => !prev)}
                 className="text-white mt-[10px] focus:outline-none"
               >
                 <img src="/images/menu3.png" alt="Toggle" className="w-5 h-5" />
@@ -169,7 +167,12 @@ const SidebarMenu = () => {
                     collapsed ? "justify-center" : "items-center"
                   }`}
                 >
-                  {renderIcon(inventoryIcon, "Inventory", isActive,inventoryIconActive)}{" "}
+                  {renderIcon(
+                    inventoryIcon,
+                    "Inventory",
+                    isActive,
+                    inventoryIconActive
+                  )}{" "}
                   {!collapsed && <span className="ml-4">Inventory</span>}
                 </div>
               )}
@@ -313,7 +316,12 @@ const SidebarMenu = () => {
                     collapsed ? "justify-center" : "items-center"
                   }`}
                 >
-                  {renderIcon(profileIcon, "Profile", isActive,profileIconActive)}{" "}
+                  {renderIcon(
+                    profileIcon,
+                    "Profile",
+                    isActive,
+                    profileIconActive
+                  )}{" "}
                   {!collapsed && <span className="ml-4">Profile</span>}
                 </div>
               )}

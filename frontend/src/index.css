@@ -48,6 +48,14 @@ input:focus {
   border: 1px solid var(--gradient, #ffbb34);
 }
 
+input.search {
+  color: rgba(255, 255, 255, 0.6);
+  background: transparent;
+}
+input.search:focus {
+  border: none;
+}
+
 button.google,
 button.apple {
   box-shadow: 2px 2px 8px 0px rgba(146, 179, 189, 0.2);
@@ -139,4 +147,8 @@ button.second {
   border-right: none !important;
   box-shadow: none !important;
   outline: none !important;
+}
+
+.ready {
+  color: rgba(255, 255, 255, 0.6);
 }
