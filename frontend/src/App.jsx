@@ -11,6 +11,15 @@ import Reset from "./pages/auth/account-recovery/Reset";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
+import Settings from "./pages/dashboard/settings/Settings";
+import Profile from "./pages/dashboard/profile/Profile";
+import Explore from "./pages/dashboard/explore/Explore";
+import Inventory from "./pages/dashboard/inventory/Inventory";
+import Sponsor from "./pages/dashboard/sponsorship/Sponsor";
+import Live from "./pages/dashboard/live/Live";
+import DolaaAI from "./pages/dashboard/ai/DolaaAI";
+import DashboardHome from "./pages/dashboard/home/DashboardHome";
+import Dashboard from "./pages/dashboard/Dashboard";
 
 const App = () => {
   useEffect(() => {
@@ -43,6 +52,16 @@ const App = () => {
         <Route path="/reset-password" element={<SetNewPassword />} />
         <Route path="/verify" element={<Verification />} />
         <Route path="/reset" element={<Reset />} />
+        <Route path="/dashboard" element={<Dashboard />}>
+          <Route index element={<DashboardHome />} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="inventory" element={<Inventory />} />
+          <Route path="explore" element={<Explore />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="sponsorship" element={<Sponsor />} />
+          <Route path="live-match" element={<Live />} />
+          <Route path="ai" element={<DolaaAI />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
