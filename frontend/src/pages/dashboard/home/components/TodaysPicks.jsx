@@ -75,12 +75,12 @@ export const TodaysPicks = () => (
       {todaysPicksData.map((pick, i) => (
         <div
           key={i}
-          className="relative z-50 w-full h-[300px] whitespace-nowrap rounded-xl pick p-2"
+          className="relative z-10 w-full h-[300px] whitespace-nowrap rounded-xl pick p-2"
           style={{
             backgroundImage: `url(${pick.image})`,
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
-            backgroundPosition: "40% 90%",
+            backgroundPosition: "40% 90% ",
           }}
         >
           <div className="absolute top-2 pick-number right-2 bg-black bg-opacity-60 text-white today-name text-[19px] font-[400] px-[10px] py-[10px] rounded-full">

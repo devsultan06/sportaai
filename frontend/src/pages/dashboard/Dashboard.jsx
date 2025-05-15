@@ -7,7 +7,7 @@ const Dashboard = () => {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
-    <div className="flex h-screen overflow-hidden">
+    <div className="flex relative h-screen overflow-hidden">
       <div className="overflow-y-auto z-50">
         <SidebarMenu collapsed={collapsed} setCollapsed={setCollapsed} />
       </div>
@@ -23,8 +23,13 @@ const Dashboard = () => {
         }}
       >
         <DashboardNavbar collapsed={collapsed} />
-        <div className=" pt-[153px] px-[33px] pb-[50px]">
+
+        <div className="pt-[153px] px-[33px] pb-[50px]">
           <Outlet />
+        </div>
+
+        <div className="fixed bottom-6 right-9 z-50">
+          <img src="/images/ai-icon.png" alt="AI Icon" className="w-[90%]" />
         </div>
       </div>
     </div>
