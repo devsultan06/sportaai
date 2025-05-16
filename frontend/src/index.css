@@ -292,3 +292,28 @@ button.second {
   border-radius: 24px;
   background: linear-gradient(270deg, #ffbb34 19.7%, #ff256f 150%);
 }
+
+.rate {
+  background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.2) 0%,
+      rgba(0, 0, 0, 0.2) 100%
+    ),
+    #2b2b2a;
+}
+
+.compare {
+  border-radius: 24px;
+  background: linear-gradient(270deg, #ffbb34 19.7%, #ff256f 150%);
+}
+
+.compare-dis {
+  border-radius: 24px;
+  opacity: 0.6;
+  background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.2) 0%,
+      rgba(0, 0, 0, 0.2) 100%
+    ),
+    linear-gradient(270deg, #ffbb34 19.7%, #ff256f 150%);
+}

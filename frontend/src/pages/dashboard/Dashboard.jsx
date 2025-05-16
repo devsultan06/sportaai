@@ -1,15 +1,19 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import SidebarMenu from "./components/SidebarMenu";
 import DashboardNavbar from "./components/DashboardNavbar";
 import { useState } from "react";
 
 const Dashboard = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const location = useLocation();
+  const hideSidebar = location.pathname.includes("/dashboard/players/");
 
   return (
     <div className="flex relative h-screen overflow-hidden">
       <div className="overflow-y-auto z-50">
-        <SidebarMenu collapsed={collapsed} setCollapsed={setCollapsed} />
+        {!hideSidebar && (
+          <SidebarMenu collapsed={collapsed} setCollapsed={setCollapsed} />
+        )}
       </div>
 
       <div
