@@ -1,6 +1,13 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const PlayerCard = ({ name, subText, rating, image }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    const id = name.toLowerCase(); // or any unique ID you have
+    navigate(`/players/${id}`);
+  };
   return (
     <div
       key={name}
@@ -46,13 +53,13 @@ const PlayerCard = ({ name, subText, rating, image }) => {
           </h3>
 
           <p className="text-[16px] font-[400] -mt-[15px]">{subText}</p>
-          <p
-          
-            className="text-[10px] w-fit text-center mx-auto font-[400] bg-[#2a2a2a] px-[6px] py-[2.286px] rounded-[28.571px]"
-          >
+          <p className="text-[10px] w-fit text-center mx-auto font-[400] bg-[#2a2a2a] px-[6px] py-[2.286px] rounded-[28.571px]">
             Football
           </p>
-          <button className="mt-3 cursor-pointer px-[16px] py-[4px] view text-white text-[16px] font-[400] transition">
+          <button
+            onClick={handleClick}
+            className="mt-3 cursor-pointer px-[16px] py-[4px] view text-white text-[16px] font-[400] transition"
+          >
             View full profile
           </button>
         </div>

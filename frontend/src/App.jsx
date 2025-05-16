@@ -20,6 +20,7 @@ import Live from "./pages/dashboard/live/Live";
 import DolaaAI from "./pages/dashboard/ai/DolaaAI";
 import DashboardHome from "./pages/dashboard/home/DashboardHome";
 import Dashboard from "./pages/dashboard/Dashboard";
+import PlayerProfile from "./pages/dashboard/PlayerProfile/PlayerProfile";
 
 const App = () => {
   useEffect(() => {
@@ -52,6 +53,8 @@ const App = () => {
         <Route path="/reset-password" element={<SetNewPassword />} />
         <Route path="/verify" element={<Verification />} />
         <Route path="/reset" element={<Reset />} />
+        <Route path="/players/:id" element={<PlayerProfile />} />
+
         <Route path="/dashboard" element={<Dashboard />}>
           <Route index element={<DashboardHome />} />
           <Route path="settings" element={<Settings />} />
