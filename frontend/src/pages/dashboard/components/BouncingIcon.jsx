@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 const BouncingIcon = () => {
   return (
     <motion.div
-      className="fixed bottom-6 right-9 z-50"
+      className="fixed bottom-6 right-9 z-50 cursor-pointer"
       animate={{
         scale: [1, 1.3, 1],
       }}
