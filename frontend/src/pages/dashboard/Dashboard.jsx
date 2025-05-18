@@ -2,6 +2,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import SidebarMenu from "./components/SidebarMenu";
 import DashboardNavbar from "./components/DashboardNavbar";
 import { useState } from "react";
+import BouncingIcon from "./components/BouncingIcon";
 
 const Dashboard = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -32,9 +33,7 @@ const Dashboard = () => {
           <Outlet />
         </div>
 
-        <div className="fixed bottom-6 right-9 z-50">
-          <img src="/images/ai-icon.png" alt="AI Icon" className="w-[90%]" />
-        </div>
+        <BouncingIcon />
       </div>
     </div>
   );
