@@ -30,7 +30,7 @@ const SidebarMenu = ({ collapsed, setCollapsed }) => {
   );
 
   return (
-    <div className="h-screen z-10 bg-[#1E1E1E] font-metropolis  text-white">
+    <div className="h-screen z-10 hidden md:block bg-[#1E1E1E] font-metropolis  text-white">
       <Sidebar
         collapsed={collapsed}
         breakPoint="md"
