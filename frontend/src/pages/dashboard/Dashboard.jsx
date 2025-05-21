@@ -3,11 +3,13 @@ import SidebarMenu from "./components/SidebarMenu";
 import DashboardNavbar from "./components/DashboardNavbar";
 import { useState } from "react";
 import BouncingIcon from "./components/BouncingIcon";
+import MobileSidebar from "./components/MobileSidebar";
 
 const Dashboard = () => {
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
   const hideSidebar = location.pathname.includes("/dashboard/players/");
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   return (
     <div className="flex relative h-screen overflow-hidden">
@@ -17,8 +19,10 @@ const Dashboard = () => {
         )}
       </div>
 
+      <MobileSidebar isOpen={isMobileOpen} setIsOpen={setIsMobileOpen} />
+
       <div
-        className="flex-1 overflow-y-auto relative z-50 h-screen bg-[#121212] text-white"
+        className="flex-1 overflow-y-auto relative z-40 h-screen bg-[#121212] text-white"
         style={{
           backgroundImage: "url('/images/dashbg.png')",
           backgroundSize: "cover",
@@ -27,11 +31,28 @@ const Dashboard = () => {
           backgroundAttachment: "fixed",
         }}
       >
-        <DashboardNavbar collapsed={collapsed} />
+        {isMobileOpen ? (
+          <div className="absolute  inset-0 bg-black opacity-50">
+            <DashboardNavbar
+              collapsed={collapsed}
+              setIsMobileOpen={setIsMobileOpen}
+            />
 
-        <div className="pt-[153px] px-[33px] pb-[50px]">
-          <Outlet />
-        </div>
+            <div className="pt-[153px] px-[33px] pb-[50px]">
+              <Outlet />
+            </div>
+          </div>
+        ) : (
+          <>
+            <DashboardNavbar
+              collapsed={collapsed}
+              setIsMobileOpen={setIsMobileOpen}
+            />
+            <div className="pt-[153px] px-[33px] pb-[50px]">
+              <Outlet />
+            </div>{" "}
+          </>
+        )}
 
         <BouncingIcon />
       </div>
